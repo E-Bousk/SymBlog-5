@@ -42,17 +42,17 @@ class Article
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private \DateTimeImmutable $publishedAt;
+    private ?\DateTimeImmutable $publishedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private \DateTimeInterface $editedAt;
+    private ?\DateTimeInterface $editedAt;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private bool $isPublished;
+    private bool $isPublished = false;
 
     public function getId(): ?int
     {

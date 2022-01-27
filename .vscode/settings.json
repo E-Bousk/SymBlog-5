@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "SQLite",
+            "database": "${workspaceFolder:sym-blog_5.1.11}/var/data/sym5blog.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
