@@ -4,15 +4,15 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Article;
+use App\Entity\Author;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class ArticleFixtures extends Fixture
+class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
-    private \Faker\Generator $faker;
-
     private ObjectManager $manager;
 
     private SluggerInterface $slugger;
@@ -26,16 +26,25 @@ class ArticleFixtures extends Fixture
     {
         $this->manager = $manager;
 
-        $this->faker = Factory::create();
-
-        $this->generateArticles(7);
+        $this->generateArticles(4);
         
         $this->manager->flush();
     }
 
+    public function getDependencies()
+    {
+        return [
+            PictureFixtures::class,
+            AuthorFixtures::class,
+            CategoryFixtures::class
+        ];
+    }
+
     private function generateArticles(int $number): void
     {
-        for ($i = 1; $i < $number; $i++) {
+        $faker = Factory::create();
+        
+        for ($i = 0; $i < $number; $i++) {
             $article = new Article();
 
             [
@@ -44,15 +53,21 @@ class ArticleFixtures extends Fixture
             
             ] = $this->generateRandomDateBetweenRange('01/01/2021', '01/01/2022');
 
-            $title = $this->faker->sentence();
+            $title = $faker->sentence();
+            $picture = $this->getReference("picture{$i}");
 
             $article->setTitle($title)
-                    ->setContent($this->faker->paragraph())
+                    ->setContent($faker->paragraph())
                     ->setSlug(sprintf('%s-%s', $this->slugger->slug(strtolower($title)), $dateString))
                     ->setCreatedAt($dateObject)
                     // ->setIsPublished(false)
+                    ->setAuthor($this->getReference("author" . mt_rand(1, 2)))
+                    ->addCategory($this->getReference("category" . mt_rand(1, 3)))
+                    ->setPicture($picture)
             ;
             $this->manager->persist($article);
+
+            $picture->setArticle($article);
         }
     }
 
