@@ -42,7 +42,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 
     private function generateArticles(int $number): void
     {
-        $faker = Factory::create();
+        $faker= Factory::create('fr_FR');
         
         for ($i = 0; $i < $number; $i++) {
             $article = new Article();
@@ -53,11 +53,11 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             
             ] = $this->generateRandomDateBetweenRange('01/01/2021', '01/01/2022');
 
-            $title = $faker->sentence();
+            $title = $faker->sentence;
             $picture = $this->getReference("picture{$i}");
 
             $article->setTitle($title)
-                    ->setContent($faker->paragraph())
+                    ->setContent($faker->paragraph)
                     ->setSlug(sprintf('%s-%s', $this->slugger->slug(strtolower($title)), $dateString))
                     ->setCreatedAt($dateObject)
                     // ->setIsPublished(false)

@@ -20,14 +20,14 @@ class PictureFixtures extends Fixture
         'placeimg_400_400_nature1.jpg'
     ];
 
-    private string $filesToUploadDirectory;
     private FileUploader $fileUploader;
+    private string $toUploadDirectory;
     
     public function __construct(FileUploader $fileUploader, KernelInterface $kernel)
     {
         $this->fileUploader = $fileUploader;
-        // Dossier dans lequel sont les images à 'uploader'
-        $this->filesToUploadDirectory = "{$kernel->getProjectDir()}/public/to-upload/";
+        // Dossier des images à 'uploader'
+        $this->toUploadDirectory = "{$kernel->getProjectDir()}/public/to-upload/";
     }
     
     private ObjectManager $manager;
@@ -51,7 +51,7 @@ class PictureFixtures extends Fixture
                 'filePath' => $picturePath
             ] = $this->fileUploader->upload(
                     new UploadedFile(
-                        $this->filesToUploadDirectory . $pictureFile,
+                        $this->toUploadDirectory . $pictureFile,
                         $pictureFile,
                         null,
                         null,
@@ -68,10 +68,10 @@ class PictureFixtures extends Fixture
 
             $this->manager->persist($picture);
 
-            // Efface le dossier « /public/to-upload » après avoir traité tous les fichiers
-            if ($key === array_key_last(self::$pictures)) {
-                rmdir($this->filesToUploadDirectory);
-            }
+            // // Efface le dossier « /public/to-upload » après avoir traité tous les fichiers
+            // if ($key === array_key_last(self::$pictures)) {
+            //     rmdir($this->toUploadDirectory);
+            // }
         }
     }
 }

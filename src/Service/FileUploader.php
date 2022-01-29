@@ -2,13 +2,15 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class FileUploader
 {
     private SluggerInterface $slugger;
+    // « $uploadsDirectory » est définit dans « services.yaml »
     private string $uploadsDirectory;
 
     public function __construct(SluggerInterface $slugger, string $uploadsDirectory)
@@ -26,9 +28,10 @@ class FileUploader
     public function upload(UploadedFile $file): array
     {
         $filename = $this->generateUniqueFileName($file);
-
+        
         try {
-            $file->move($this->uploadsDirectory, $filename);
+            // $file->move($this->uploadsDirectory, $filename);
+            (new Filesystem())->copy($file, $this->uploadsDirectory . '/' . $filename);
         } catch (FileException $fileException) {
             throw $fileException;
         }
