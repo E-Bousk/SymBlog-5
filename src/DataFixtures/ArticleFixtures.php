@@ -4,29 +4,33 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Article;
-use App\Entity\Author;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     private ObjectManager $manager;
 
     private SluggerInterface $slugger;
+    private int $pictureCount;
 
-    public function __construct(SluggerInterface $slugger)
+
+    public function __construct(SluggerInterface $slugger, KernelInterface $kernel)
     {
         $this->slugger = $slugger;
+        // Compte le nombre d'images dans le répertoire « to-upload »
+        $this->pictureCount = count(glob("{$kernel->getProjectDir()}/public/to-upload/*.*"));
     }
     
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
-
-        $this->generateArticles(4);
+        
+        $this->generateArticles($this->pictureCount);
         
         $this->manager->flush();
     }
@@ -61,7 +65,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                     ->setSlug(sprintf('%s-%s', $this->slugger->slug(strtolower($title)), $dateString))
                     ->setCreatedAt($dateObject)
                     // ->setIsPublished(false)
-                    ->setAuthor($this->getReference("author" . mt_rand(1, 2)))
+                    ->setAuthor($this->getReference("author" . mt_rand(0, 1)))
                     ->addCategory($this->getReference("category" . mt_rand(1, 3)))
                     ->setPicture($picture)
             ;

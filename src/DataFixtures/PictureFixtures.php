@@ -13,13 +13,8 @@ class PictureFixtures extends Fixture
 {
     // Tableau avec les fichiers à traiter (dans le dossier « /public/to-upload »)
     /** @var array<string> */
-    private static array $pictures = [
-        '553-800x800.jpg',
-        '807-1775x1006.jpg',
-        '977-536x354.jpg',
-        'placeimg_400_400_nature1.jpg'
-    ];
-
+    private array $pictures;
+    
     private FileUploader $fileUploader;
     private string $toUploadDirectory;
     
@@ -28,38 +23,40 @@ class PictureFixtures extends Fixture
         $this->fileUploader = $fileUploader;
         // Dossier des images à 'uploader'
         $this->toUploadDirectory = "{$kernel->getProjectDir()}/public/to-upload/";
+        // Récupère tous les fichiers du répertoire et créé un tableau avec
+        $this->pictures = array_values(array_diff(scandir($this->toUploadDirectory), array('.', '..')));
     }
     
     private ObjectManager $manager;
-
+    
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
-
+        
         $this->generateArticlePicture();
-
+        
         $this->manager->flush();
     }
 
     public function generateArticlePicture(): void
     {
-        foreach (self::$pictures as $key => $pictureFile) {
+        $this->fileUploader->deleteUploadsFolder();
+        
+        foreach ($this->pictures as $key => $pictureFile) {
             $picture = new Picture();
-
+            
             [
                 'fileName' => $pictureName,
                 'filePath' => $picturePath
             ] = $this->fileUploader->upload(
-                    new UploadedFile(
-                        $this->toUploadDirectory . $pictureFile,
-                        $pictureFile,
-                        null,
-                        null,
-                        true
-                    )
+                new UploadedFile(
+                    $this->toUploadDirectory . $pictureFile,
+                    $pictureFile,
+                    null,
+                    null,
+                    true
                 )
-            ;
-
+            );
             $picture->setPictureName($pictureName)
                 ->setPicturePath($picturePath)
             ;

@@ -12,11 +12,13 @@ class FileUploader
     private SluggerInterface $slugger;
     // « $uploadsDirectory » est définit dans « services.yaml »
     private string $uploadsDirectory;
+    private Filesystem $filesystem;
 
-    public function __construct(SluggerInterface $slugger, string $uploadsDirectory)
+    public function __construct(SluggerInterface $slugger, string $uploadsDirectory, Filesystem $filesystem)
     {
         $this->slugger = $slugger;
         $this->uploadsDirectory = $uploadsDirectory;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -30,15 +32,14 @@ class FileUploader
         $filename = $this->generateUniqueFileName($file);
         
         try {
-            // $file->move($this->uploadsDirectory, $filename);
-            (new Filesystem())->copy($file, $this->uploadsDirectory . '/' . $filename);
+            $this->filesystem->copy($file, $this->uploadsDirectory . $filename);
         } catch (FileException $fileException) {
             throw $fileException;
         }
 
         return [
             'fileName' => $filename,
-            'filePath' => $this->uploadsDirectory . $filename
+            'filePath' => $this->uploadsDirectory
         ];
     }
 
@@ -56,5 +57,13 @@ class FileUploader
         $randomID = uniqid();
 
         return "{$originalFilenameSlugged}-{$randomID}.{$file->guessExtension()}";
+    }
+
+    public function deleteUploadsFolder(): void
+    {
+        if ($this->filesystem->exists($this->uploadsDirectory)) {
+            $this->filesystem->remove($this->uploadsDirectory);
+            $this->filesystem->mkdir($this->uploadsDirectory);
+        }
     }
 }
