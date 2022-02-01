@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Article;
+use Symfony\Component\Finder\Finder;
 use Doctrine\Persistence\ObjectManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -14,23 +15,24 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     private ObjectManager $manager;
-
+    private KernelInterface $kernel;
     private SluggerInterface $slugger;
-    private int $pictureCount;
 
 
     public function __construct(SluggerInterface $slugger, KernelInterface $kernel)
     {
         $this->slugger = $slugger;
-        // Compte le nombre d'images dans le répertoire « to-upload »
-        $this->pictureCount = count(glob("{$kernel->getProjectDir()}/public/to-upload/*.*"));
+        $this->kernel = $kernel;
     }
     
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
         
-        $this->generateArticles($this->pictureCount);
+        // Compte le nombre d'images dans le répertoire « to-upload »
+        $pictureCount = iterator_count((new Finder)->files()->in("{$this->kernel->getProjectDir()}/public/to-upload/"));
+
+        $this->generateArticles($pictureCount);
         
         $this->manager->flush();
     }

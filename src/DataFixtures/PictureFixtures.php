@@ -8,23 +8,17 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Finder\Finder;
 
 class PictureFixtures extends Fixture
 {
-    // Tableau avec les fichiers à traiter (dans le dossier « /public/to-upload »)
-    /** @var array<string> */
-    private array $pictures;
-    
     private FileUploader $fileUploader;
     private string $toUploadDirectory;
     
     public function __construct(FileUploader $fileUploader, KernelInterface $kernel)
     {
         $this->fileUploader = $fileUploader;
-        // Dossier des images à 'uploader'
         $this->toUploadDirectory = "{$kernel->getProjectDir()}/public/to-upload/";
-        // Récupère tous les fichiers du répertoire et créé un tableau avec
-        $this->pictures = array_values(array_diff(scandir($this->toUploadDirectory), array('.', '..')));
     }
     
     private ObjectManager $manager;
@@ -40,23 +34,29 @@ class PictureFixtures extends Fixture
 
     public function generateArticlePicture(): void
     {
-        $this->fileUploader->deleteUploadsFolder();
+        $this->fileUploader->emptyUploadsFolder();
         
-        foreach ($this->pictures as $key => $pictureFile) {
+        $finder = new Finder();
+        $finder->files()->in($this->toUploadDirectory);
+        $key = -1;
+
+        foreach ($finder as $file) {
             $picture = new Picture();
-            
+            $key += 1;
+
             [
                 'fileName' => $pictureName,
                 'filePath' => $picturePath
             ] = $this->fileUploader->upload(
                 new UploadedFile(
-                    $this->toUploadDirectory . $pictureFile,
-                    $pictureFile,
+                    $this->toUploadDirectory . $file->getRelativePathname(),
+                    $file->getRelativePathname(),
                     null,
                     null,
                     true
                 )
             );
+            
             $picture->setPictureName($pictureName)
                 ->setPicturePath($picturePath)
             ;
@@ -64,11 +64,6 @@ class PictureFixtures extends Fixture
             $this->addReference("picture{$key}", $picture);
 
             $this->manager->persist($picture);
-
-            // // Efface le dossier « /public/to-upload » après avoir traité tous les fichiers
-            // if ($key === array_key_last(self::$pictures)) {
-            //     rmdir($this->toUploadDirectory);
-            // }
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -9,12 +10,12 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class FileUploader
 {
-    private SluggerInterface $slugger;
-    // « $uploadsDirectory » est définit dans « services.yaml »
+    // NOTE: « $uploadsDirectory » est définit dans « services.yaml »
     private string $uploadsDirectory;
+    private SluggerInterface $slugger;
     private Filesystem $filesystem;
 
-    public function __construct(SluggerInterface $slugger, string $uploadsDirectory, Filesystem $filesystem)
+    public function __construct(string $uploadsDirectory, SluggerInterface $slugger, Filesystem $filesystem)
     {
         $this->slugger = $slugger;
         $this->uploadsDirectory = $uploadsDirectory;
@@ -59,11 +60,10 @@ class FileUploader
         return "{$originalFilenameSlugged}-{$randomID}.{$file->guessExtension()}";
     }
 
-    public function deleteUploadsFolder(): void
+    public function emptyUploadsFolder(): void
     {
         if ($this->filesystem->exists($this->uploadsDirectory)) {
-            $this->filesystem->remove($this->uploadsDirectory);
-            $this->filesystem->mkdir($this->uploadsDirectory);
+            $this->filesystem->remove((new Finder())->files()->in($this->uploadsDirectory));
         }
     }
 }
