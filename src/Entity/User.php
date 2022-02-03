@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @Table(name="users")
+ * @UniqueEntity(fields={"email"}, message="Impossible de créer un compte utilisateur avec cette adresse e-mail.")
  */
 class User implements UserInterface
 {
