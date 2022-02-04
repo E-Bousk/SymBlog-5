@@ -14,8 +14,9 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         return $this->json([
-            'message' => 'Message édité à tord dans le dossier Vendor !',
-            'path' => 'src/Controller/HomeController.php',
+            'message' => 'Hello world !',
+            'controller' => 'HomeController',
+            'action' => 'index()'
         ]);
     }
 }

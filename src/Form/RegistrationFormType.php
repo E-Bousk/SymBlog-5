@@ -14,6 +14,13 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 
 class RegistrationFormType extends AbstractType
 {
+    /**
+     * Build a form with HTML attributes and Validator constraints
+     * 
+     * @param FormBuilderInterface<callable> $builder 
+     * @param array<mixed> $options 
+     * @return void 
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

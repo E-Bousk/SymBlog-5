@@ -5,8 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -19,11 +20,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     */
+     */ 
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Veuillez saisir votre adresse e-mail.")
+     * @Assert\Email(message="L'adresse e-mail {{ value }} n'est pas valide.")
      */
     private string $email;
 
@@ -36,6 +39,9 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Veuillez saisir un mot de passe.")
+     * @Assert\NotCompromisedPassword(message="Ce mot de passe a été divulgué lors d'une fuite de données. Pour votre sécurité, veuillez en utiliser un autre.")
+     * @Assert\Regex(pattern="/^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ý])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ý0-9]).{12,}$/", message="Le mot de passe doit contenir au minimum 12 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre, et 1 caractère spécial.")
      */
     private string $password;
 
@@ -196,7 +202,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRegisteredAt(): ?\DateTimeImmutable
+    public function getRegisteredAt(): \DateTimeImmutable
     {
         return $this->registeredAt;
     }
@@ -208,7 +214,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAccountMustBeVerifiedBefore(): ?\DateTimeImmutable
+    public function getAccountMustBeVerifiedBefore(): \DateTimeImmutable
     {
         return $this->accountMustBeVerifiedBefore;
     }
@@ -232,7 +238,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIsVerified(): ?bool
+    public function getIsVerified(): bool
     {
         return $this->isVerified;
     }

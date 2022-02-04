@@ -1,0 +1,13 @@
+{# Flashbag #}
+{% for label, messages in app.flashes %}
+    <section class="container">
+        <div class="my-4 h5 alert alert-{{ label }} alert-dismissible fade show text-center" role="alert">
+            {% for message in messages %}
+                <div class="text-center font-weight-bold">{{ message | raw }} {% if label is same as("success") %}&#x1F44D;{% elseif label is same as("danger")%}&#x1F6A7;{% endif %}</div>
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </section>
+{% endfor %}
