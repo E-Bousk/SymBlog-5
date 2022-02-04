@@ -1,10 +1,19 @@
 monolog:
     handlers:
-        main:
-            type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
+        security:
+            type: rotating_file
+            max_files: 10
             level: debug
-            channels: ["!event"]
+            path: '%kernel.logs_dir%/security.%kernel.environment%.log'
+            channels: [security]
+        main:
+            type: rotating_file
+            max_files: 10
+            level: debug
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            channels: 
+                - '!event'
+                - '!security'
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
@@ -16,4 +25,4 @@ monolog:
         console:
             type: console
             process_psr_3_messages: false
-            channels: ["!event", "!doctrine", "!console"]
+            channels: ['!event', '!doctrine', '!console']
