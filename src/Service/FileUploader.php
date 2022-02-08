@@ -6,7 +6,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class FileUploader
 {
@@ -34,8 +34,8 @@ class FileUploader
         
         try {
             $this->filesystem->copy($file, $this->uploadsDirectory . $filename);
-        } catch (FileException $fileException) {
-            throw $fileException;
+        } catch (IOExceptionInterface $exception) {
+            echo "Une erreur est survenue lors de la copie de fichier(s) dans ".$exception->getPath();
         }
 
         return [
