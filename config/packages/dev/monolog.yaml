@@ -1,5 +1,13 @@
 monolog:
+    channels:
+        - honey_pot
     handlers:
+        honeypot:
+            type: rotating_file
+            max_files: 10
+            level: info
+            path: '%kernel.logs_dir%/honeypot.%kernel.environment%.log'
+            channels: [honey_pot]
         security:
             type: rotating_file
             max_files: 10
@@ -14,6 +22,7 @@ monolog:
             channels: 
                 - '!event'
                 - '!security'
+                - '!honey_pot'
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
