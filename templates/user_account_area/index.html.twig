@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/auth-check-user-ip.js') }}" defer></script>
+{% endblock javascripts %}
+
+{% block title %}Mon espace utilisateur{% endblock %}
+
+{% block body %}
+    <main class="mt-3 container text-center">
+        <section class="table-responsive">
+            <h1 class="mt-5 mb-3">Mon compte utilisateur</h1>
+            <table class="table table-sm table-bordered">
+                <thead class="thead-dark">
+                    <th>
+                        E-mail
+                    </th>
+                    <th>
+                        Mot de passe
+                    </th>
+                    <th>
+                        Activer la vérification d'adresse IP à l'authentification
+                    </th>
+                    <th>
+                        Mes adresses IP
+                    </th>
+                </thead>
+                <tbody>
+                    <td>
+                        {{ user.email }}
+                    </td>
+                    <td>
+                        Un hash argon2i, pas intéressant... &#x1F440;
+                        <a href="#" class="m-3 btn btn-sm btn-warning">Modifier mon mot de passe</a>
+                    </td>
+                    <td>
+                        <fieldset class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="check_user_ip_checkbox" data-url="{{ path('app_user_account_profile_toogle_checking_ip') }}" {{ user.isGuardCheckIp ? "checked"}}>
+                            <label class="custom-control-label" for="check_user_ip_checkbox">{{ user.isGuardCheckIp ? "Activé" : "Inactivé"}}</label>
+                        </fieldset>
+                    </td>
+                    <td>
+                        <p id="user_ip_addresses">{{ user.whitelistedIpAddresses|join(' | ') }}</p>
+                        <button type="button" class="m-3 btn btn-sm btn-warning" id="add_current_ip_to_whitelist_button" data-url="{{ path('app_user_account_profile_add_ip') }}">Ajouter mon adresse IP actuelle</button>
+                    </td>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="table-responsive">
+            <h1 class="mt-5 mb-3">Mes articles</h1>
+            <table class="table table-sm table-bordered">
+                <thead class="thead-dark">
+                    <th>
+                        Nombre d'articles créés
+                    </th>
+                    <th>
+                        Nombre d'articles publiés
+                    </th>
+                    <th>
+                        Nombre d'articles restant à publier
+                    </th>
+                </thead>
+                <tbody>
+                    <td>
+                        {{ articlesCreatedCount }}
+                    </td>
+                    <td>
+                        {{ articlesPublished }}
+                    </td>
+                    <td>
+                        {{ articlesCreatedCount - articlesPublished }}
+                    </td>
+                </tbody>
+            </table>
+        </section>
+    </main>
+{% endblock %}

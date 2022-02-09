@@ -9,14 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="app_home")
+     * @Route("/", name="app_home", methods={"GET"})
      */
     public function index(): Response
     {
         return $this->json([
-            'message' => 'Hello world !',
+            'message'    => 'Hello world !',
             'controller' => 'HomeController',
-            'action' => 'index()'
+            'action'     => 'index()'
         ]);
     }
 }

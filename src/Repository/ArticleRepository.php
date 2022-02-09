@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Article;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +21,30 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getCountOfArticlesCreated(User $user): int
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('ac')
+            ->select('COUNT(ac)')
+            ->innerJoin('App\Entity\Author', 'a', Join::WITH, 'a.id = ac.author')
+            ->innerJoin('App\Entity\User', 'u', Join::WITH, 'a.id = u.author')
+            ->where('u.id = :user')
+            ->setParameter('user', $user)
             ->getQuery()
-            ->getResult()
+            ->getSingleScalarResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Article
+    public function getCountOfArticlesPublished(User $user): int
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('ap')
+            ->select('COUNT(ap)')
+            ->innerJoin('App\Entity\Author', 'a', Join::WITH, 'a.id = ap.author')
+            ->innerJoin('App\Entity\User', 'u', Join::WITH, 'a.id = u.author')
+            ->where('u.id = :user')
+            ->andWhere('ap.isPublished = true')
+            ->setParameter('user', $user)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getSingleScalarResult()
         ;
     }
-    */
 }

@@ -17,7 +17,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/register", name="app_register", methods={"GET", "POST"})
      */
     public function register(
         Request $request,
@@ -42,12 +42,12 @@ class RegistrationController extends AbstractController
 
             $sendEmail->send([
                 'recipient_email' => $user->getEmail(),
-                'subject' => "Activez votre compte utilisateur",
-                'html_template' => "registration/register_email_confirmation.html.twig",
-                'context' => [
-                    'userID' => $user->getId(),
+                'subject'         => "Activez votre compte utilisateur",
+                'html_template'   => "registration/register_email_confirmation.html.twig",
+                'context'         => [
+                    'userID'            => $user->getId(),
                     'registrationToken' => $user->getRegistrationToken(),
-                    'tokenLifeTime' => $user->getAccountMustBeVerifiedBefore()->format('d/m/Y à H:i')
+                    'tokenLifeTime'     => $user->getAccountMustBeVerifiedBefore()->format('d/m/Y à H: i')
                 ]
             ]);
 
