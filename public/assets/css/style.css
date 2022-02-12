@@ -13,3 +13,11 @@
 table.table tbody td {
     vertical-align: middle;
 }
+
+p[id="user_ip_addresses"] {
+    cursor: pointer;
+}
+
+.tooltip-inner {
+    background-color: lightslategray;
+}

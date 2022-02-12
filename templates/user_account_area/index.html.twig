@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
-    <script src="{{ asset('assets/js/auth-check-user-ip.js') }}" defer></script>
+    <script type="module" src="{{ asset('assets/js/auth/toggle-checking-ip.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/auth/add-current-ip-to-whitelist.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/auth/edit-user-ip-whitelist.js') }}"></script>
 {% endblock javascripts %}
 
 {% block title %}Mon espace utilisateur{% endblock %}
 
 {% block body %}
     <main class="mt-3 container text-center">
+
+       {{ include('_partials/_confirm_password_modal.html.twig') }}
+
         <section class="table-responsive">
             <h1 class="mt-5 mb-3">Mon compte utilisateur</h1>
             <table class="table table-sm table-bordered">
@@ -35,13 +40,13 @@
                     </td>
                     <td>
                         <fieldset class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="check_user_ip_checkbox" data-url="{{ path('app_user_account_profile_toogle_checking_ip') }}" {{ user.isGuardCheckIp ? "checked"}}>
-                            <label class="custom-control-label" for="check_user_ip_checkbox">{{ user.isGuardCheckIp ? "Activé" : "Inactivé"}}</label>
+                            <input type="checkbox" class="custom-control-input" id="check_user_ip_checkbox" data-url="{{ path('app_user_account_profile_toggle_checking_ip') }}" {{ user.isGuardCheckIp ? "checked"}}>
+                            <label class="custom-control-label" for="check_user_ip_checkbox">{{ user.isGuardCheckIp ? "Active" : "Inactive"}}</label>
                         </fieldset>
                     </td>
                     <td>
-                        <p id="user_ip_addresses">{{ user.whitelistedIpAddresses|join(' | ') }}</p>
-                        <button type="button" class="m-3 btn btn-sm btn-warning" id="add_current_ip_to_whitelist_button" data-url="{{ path('app_user_account_profile_add_ip') }}">Ajouter mon adresse IP actuelle</button>
+                        <p id="user_ip_addresses" data-url="{{ path('app_user_account_profile_edit_user_ip_whitelist') }}" contenteditable data-toggle="tooltip" data-placement="bottom" title="Cliquez pour ajouter ou supprimer une ou plusieurs adresses IP puis tapez sur « entrée » pour valider">{{ user.whitelistedIpAddresses|join(' | ') }}</p>
+                        <button type="button" class="m-3 btn btn-sm btn-warning" id="add_current_ip_to_whitelist_button" data-url="{{ path('app_user_account_profile_add_current_ip') }}">Ajouter mon adresse IP actuelle</button>
                     </td>
                 </tbody>
             </table>

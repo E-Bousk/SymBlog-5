@@ -340,12 +340,10 @@ class User implements UserInterface
         return $this->whitelistedIpAddresses;
     }
 
-    /** @param string|null $whitelistedIpAddresses */
-    public function setWhitelistedIpAddresses(?string $whitelistedIpAddresses): self
+    /** @param array<string|null> $whitelistedIpAddresses */
+    public function setWhitelistedIpAddresses(array $whitelistedIpAddresses): self
     {
-        if (!in_array($whitelistedIpAddresses, $this->getWhitelistedIpAddresses())) {
-            $this->whitelistedIpAddresses[] = $whitelistedIpAddresses;
-        }
+        $this->whitelistedIpAddresses = $whitelistedIpAddresses;
 
         return $this;
     }
