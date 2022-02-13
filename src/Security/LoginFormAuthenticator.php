@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -31,18 +32,21 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private UrlGeneratorInterface $urlGenerator;
     private CsrfTokenManagerInterface $csrfTokenManager;
     private UserPasswordEncoderInterface $passwordEncoder;
+    private BruteForceChecker $bruteForceChecker;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        BruteForceChecker $bruteForceChecker
     )
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->bruteForceChecker = $bruteForceChecker;
     }
 
     public function supports(Request $request): bool
@@ -69,6 +73,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getUser($credentials, UserProviderInterface $userProvider): User
     {
+        sleep(1);
+
+        if ($endOfBlackListing = $this->bruteForceChecker->getEndOfBlacklisting()) {
+            throw new CustomUserMessageAccountStatusException("Il semblerait que vous ayez oublié vos identifiants. Par mesure de sécurité, vous devez patienter jusqu'à {$endOfBlackListing} avant de tenter une nouvelle connexion.");
+        }
+
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
