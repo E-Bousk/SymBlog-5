@@ -99,10 +99,15 @@ class AuthenticatorSubscriber implements EventSubscriberInterface
 
         $userEmail = $this->getUserEmail($securityToken);
 
-        $this->securityLogger->info("Un utilisateur anonyme avec l'adresse IP '{$userIp}' vient de se connecter en tant qu'utilisateur. Son e-mail est : '{$userEmail}'.");
-        
-        $this->authLogRepository->addSuccessfulAuthAttempt($userEmail, $userIp);
-        
+         $request = $this->requestStack->getCurrentRequest();
+
+        if ($request && $request->cookies->get('REMEMBERME')) {
+            $this->securityLogger->info("« REMEMBERME » cookie : Un utilisateur anonyme avec l'adresse IP '{$userIp}' vient de se connecter en tant qu'utilisateur. Son e-mail est : '{$userEmail}'.");
+            $this->authLogRepository->addSuccessfulAuthAttempt($userEmail, $userIp, true);
+        } else {
+            $this->securityLogger->info("Un utilisateur anonyme avec l'adresse IP '{$userIp}' vient de se connecter en tant qu'utilisateur. Son e-mail est : '{$userEmail}'.");
+            $this->authLogRepository->addSuccessfulAuthAttempt($userEmail, $userIp);
+        }
     }
 
     public function onSecurityLogout(LogoutEvent $event): void

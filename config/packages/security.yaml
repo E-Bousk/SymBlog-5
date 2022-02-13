@@ -26,6 +26,17 @@ security:
                 # where to redirect after logout
                 target: app_login
             user_checker: App\Security\UserChecker
+            remember_me:
+                secret: '%kernel.secret%'
+                name: 'REMEMBERME'
+                lifetime: 604800 # 1 week in seconds
+                path: /
+                secure: true
+                httponly: true
+                samesite: 'lax'
+                remember_me_parameter: '_remember_me'
+                always_remember_me: false
+                token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
             # access_denied_url: app_page_denied
 
