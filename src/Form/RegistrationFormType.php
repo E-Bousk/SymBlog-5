@@ -4,13 +4,12 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Form\FormExtension\HoneyPotType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use App\Form\FormExtension\RepeatedPasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class RegistrationFormType extends HoneyPotType
 {
@@ -34,33 +33,7 @@ class RegistrationFormType extends HoneyPotType
                     'autofocus' => true
                 ]
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passe saisis ne correspondent pas.',
-                'required' => true,
-                'first_options' => [
-                    'label' => 'Mot de passe',
-                    'label_attr' => [
-                        'title' => 'Pour des raisons de sécurité, votre mot de passe doit contenir au minimum 12 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre, et 1 caractère spécial.'
-                    ],
-                    'attr' => [
-                        'pattern' => "^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ý])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ý0-9]).{12,}$",
-                        'title' => 'Pour des raisons de sécurité, votre mot de passe doit contenir au minimum 12 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre, et 1 caractère spécial.',
-                        'maxlength' => 255
-                    ]
-                ],
-                'second_options' => [
-                    'label' => 'Confirmer le mot de passe.',
-                    'label_attr' => [
-                        'title' => 'Confirmer le mot de passe.'
-                    ],
-                    'attr' => [
-                        'pattern' => "^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ý])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ý0-9]).{12,}$",
-                        'title' => 'Confirmer le mot de passe.',
-                        'maxlength' => 255
-                    ]  
-                ]
-            ])
+            ->add('password', RepeatedPasswordType::class)
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => "J'accepte les conditions d'utilisation de ce site.",
                 'mapped' => false,
