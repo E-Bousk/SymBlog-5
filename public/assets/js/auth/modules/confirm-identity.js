@@ -1,6 +1,7 @@
 import updateWhitelistIpAddresses from './update-whitelist-ip-addresses.js';
 import updateSwitchAndLabel from './update-switch-label.js';
 import checkUserIpEntered from './check-user-ip-entered.js';
+import checkPasswordEntered from './check-password-entered.js';
 
 export default class ConfirmIdentity {
 
@@ -41,6 +42,15 @@ export default class ConfirmIdentity {
             }
 
             this.fetch_options.body = user_ip_entered_array;
+        }
+        
+        if (this.controller_url === "/user/account/profile/modify-password") {
+
+            event.preventDefault();
+
+            const password_entered = checkPasswordEntered(event);
+
+            this.fetch_options.body = JSON.stringify({'password': password_entered});
         }
 
         try {
@@ -131,12 +141,12 @@ export default class ConfirmIdentity {
         try {
             const response = await fetch(this.controller_url, fetch_options);
 
-            const {is_guard_checking_ip, is_password_confirmed, login_route, status_code, user_ip} = await response.json();
+            const {is_guard_checking_ip, is_password_confirmed, is_deauthenticated, user_ip} = await response.json();
 
             this.resetPasswordInput();
 
-            if (status_code === 302) {
-                window.location.href = login_route;
+            if (is_deauthenticated) {
+                window.location.reload();
             }
 
             if (is_password_confirmed) {

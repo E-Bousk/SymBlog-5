@@ -8,23 +8,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use App\Event\AskForPasswordConfirmationEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AskForPasswordConfirmation
 {
-    /** @var Session<mixed> */
-    private Session $session;
+    private SessionInterface $session;
     private EventDispatcherInterface $eventDispatcher;
     private RequestStack $requestStack;
     private Security $security;
     private UserPasswordEncoderInterface $encoder;
 
-    /** @param Session<mixed> $session */
     public function __construct(
-        Session $session,
+        SessionInterface $session,
         EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack,
         Security $security,
@@ -114,10 +112,6 @@ class AskForPasswordConfirmation
             $this->session->set('Password-Confirmation-Invalid', $this->session->get('Password-Confirmation-Invalid') + 1);
 
             if ($this->session->get('Password-Confirmation-Invalid') === 3) {
-                $this->session->invalidate();
-
-                $this->session->getFlashBag()->add('danger', 'Vous avez été déconnecté à la suite de trois tentatives infructueuses de saisie du mot de passe.');
-
                 $this->eventDispatcher->dispatch(new AskForPasswordConfirmationEvents, AskForPasswordConfirmationEvents::SESSION_INVALIDATE);
             }
         }

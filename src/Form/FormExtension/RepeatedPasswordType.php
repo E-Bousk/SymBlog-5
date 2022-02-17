@@ -26,9 +26,10 @@ class RepeatedPasswordType extends AbstractType
                     'title' => 'Pour des raisons de sécurité, votre mot de passe doit contenir au minimum 12 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre, et 1 caractère spécial.'
                 ],
                 'attr' => [
+                    'class' => 'text-center',
+                    'maxlength' => 255,
                     'pattern' => "^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ý])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ý0-9]).{12,}$",
-                    'title' => 'Pour des raisons de sécurité, votre mot de passe doit contenir au minimum 12 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre, et 1 caractère spécial.',
-                    'maxlength' => 255
+                    'title' => 'Pour des raisons de sécurité, votre mot de passe doit contenir au minimum 12 caractères dont 1 lettre majuscule, 1 lettre minuscule, 1 chiffre, et 1 caractère spécial.'
                 ]
             ],
             'second_options' => [
@@ -37,9 +38,10 @@ class RepeatedPasswordType extends AbstractType
                     'title' => 'Confirmer le mot de passe.'
                 ],
                 'attr' => [
+                    'class' => 'text-center',
+                    'maxlength' => 255,
                     'pattern' => "^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ý])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ý0-9]).{12,}$",
-                    'title' => 'Confirmer le mot de passe.',
-                    'maxlength' => 255
+                    'title' => 'Confirmer le mot de passe.'
                 ]  
             ]
         ]);

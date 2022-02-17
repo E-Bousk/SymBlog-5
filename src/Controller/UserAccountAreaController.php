@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Utils\LogoutUserTrait;
+use App\Form\ResetPasswordType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Security\AskForPasswordConfirmation;
@@ -10,10 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Route("/user/account/profile", name="app_user_account_profile_")
@@ -21,11 +26,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class UserAccountAreaController extends AbstractController
 {
+    use LogoutUserTrait;
+    
     private EntityManagerInterface $em;
-    private SessionInterface $session;
+    private Session $session;
     private AskForPasswordConfirmation $askForPasswordConfirmation;
 
-    public function __construct(EntityManagerInterface $em, SessionInterface $session, AskForPasswordConfirmation $askForPasswordConfirmation)
+    public function __construct(EntityManagerInterface $em, Session $session, AskForPasswordConfirmation $askForPasswordConfirmation)
     {
         $this->em = $em;
         $this->session = $session;
@@ -40,10 +47,18 @@ class UserAccountAreaController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        $form = $this->createForm(ResetPasswordType::class, null, [
+            'action' => $this->generateUrl('app_user_account_profile_modify_password'),
+            'attr' => [
+                'class' => 'mt-3'
+            ]
+        ]);
+
         return $this->render('user_account_area/index.html.twig', [
             'user'                 => $user,
             'articlesCreatedCount' => $articleRepository->getCountOfArticlesCreated($user),
             'articlesPublished'    => $articleRepository->getCountOfArticlesPublished($user),
+            'modifyPasswordForm'   => $form->createView()
         ]);
     }
 
@@ -159,5 +174,68 @@ class UserAccountAreaController extends AbstractController
             'is_password_confirmed' => true,
             'user_ip'               => implode(' | ', $userIpEnteredArray)
         ]);
+    }
+
+    /**
+     * @Route("/modify-password", name="modify_password", methods={"GET", "POST"})
+     */
+    public function modifyPassword(
+        Request $request,
+        TokenStorageInterface $tokenStorage,
+        UserPasswordEncoderInterface $encoder,
+        ValidatorInterface $validator
+    ): JsonResponse
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new HttpException(400, 'The header "X-Requested-With" is missing.');
+        }
+
+        if ($request->headers->get('Password-Modification')) {
+            /** @var string $json */
+            $json = $request->getContent();
+
+            $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
+            if (!array_key_exists('password', $data)) {
+                throw new HttpException(400, "le mot de passe doit être saisi.");
+            }
+
+            $passwordEntered = $data['password'];
+
+            $violations = $validator->validatePropertyValue(User::class, 'password', $passwordEntered);
+
+            if (count($violations) !== 0) {
+                throw new HttpException(400, $violations[0]->getMessage());
+            }
+
+            $this->session->set('PASSWORD-ENTERED-MODIFICATION', $passwordEntered);
+        }
+
+        $this->askForPasswordConfirmation->ask();
+
+        $passwordEntered = $this->session->get('PASSWORD-ENTERED-MODIFICATION');
+
+        if ($passwordEntered === null) {
+            throw new HttpException(400, 'Missing password. Did you forget the "Password-Modification" header when sending request ?');
+        }
+        
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $user->setPassword($encoder->encodePassword($user, $passwordEntered));
+
+        $this->em->flush();
+
+        $response = $this->logoutUser(
+            $request,
+            $this->session,
+            $tokenStorage,
+            'success',
+            'Votre mot de passe a bien été modifié, vous pouvez à présent vous connecter.',
+            true,
+            true
+        );
+
+        return $response;
     }
 }

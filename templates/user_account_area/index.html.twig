@@ -4,6 +4,7 @@
     <script type="module" src="{{ asset('assets/js/auth/toggle-checking-ip.js') }}"></script>
     <script type="module" src="{{ asset('assets/js/auth/add-current-ip-to-whitelist.js') }}"></script>
     <script type="module" src="{{ asset('assets/js/auth/edit-user-ip-whitelist.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/auth/modify-password.js') }}"></script>
 {% endblock javascripts %}
 
 {% block title %}Mon espace utilisateur{% endblock %}
@@ -36,7 +37,11 @@
                     </td>
                     <td>
                         Un hash argon2i, pas intéressant... &#x1F440;
-                        <a href="#" class="m-3 btn btn-sm btn-warning">Modifier mon mot de passe</a>
+                        {{ form_start(modifyPasswordForm) }}
+                            {{ form_row(modifyPasswordForm.password.first) }}
+                            {{ form_row(modifyPasswordForm.password.second) }}
+                            <button class="mt-3 btn btn-sm btn-warning" type="submit">Modifier mon mot de passe</button>
+                        {{ form_end(modifyPasswordForm) }}
                     </td>
                     <td>
                         <fieldset class="custom-control custom-switch">

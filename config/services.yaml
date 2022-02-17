@@ -42,7 +42,12 @@ services:
             $senderEmail: '%app.sender_email%'
             $senderName: '%app.sender_name%'
     
-    # pour 'autowiring' le service 'session' avec la variable '$session' dans la classe 'AskForPasswordConfirmation'
-    App\Security\AskForPasswordConfirmation:
+    # pour 'autowiring' le service 'session' avec la variable '$session' dans la classe 'UserAccountAreaController'
+    App\Controller\UserAccountAreaController:
+        arguments:
+            $session: '@session'
+
+    # pour 'autowiring' le service 'session' avec la variable '$session' dans la classe 'AskForPasswordConfirmationSubscriber'
+    App\EventSubscriber\AskForPasswordConfirmationSubscriber:
         arguments:
             $session: '@session'
