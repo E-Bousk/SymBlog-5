@@ -15,7 +15,7 @@ class AuthorFixtures extends Fixture
     {
         $this->manager = $manager;
 
-        $this->generateAuthors(2);
+        $this->generateAuthors(6);
 
         $this->manager->flush();
     }

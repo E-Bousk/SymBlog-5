@@ -40,6 +40,8 @@ class NewDatabaseCommand extends Command
 
         $this->createRememberMeTokenTable();
 
+        $this->enableDeleteInactiveAccountSchedulerEvent();
+
         $io->success('RAS => Base de données prête avec ses data.');
 
         return Command::SUCCESS;
@@ -80,6 +82,21 @@ class NewDatabaseCommand extends Command
             `class`    varchar(100) NOT NULL,
             `username` varchar(200) NOT NULL
         );";
+
+        $this->em->getConnection()->exec($sqlQuery);
+    }
+
+    private function enableDeleteInactiveAccountSchedulerEvent(): void
+    {
+        $sqlQuery = "SET GLOBAL event_scheduler = 1;
+            CREATE DEFINER=`root`@`localhost`
+            EVENT delete_inactive_account
+            ON SCHEDULE EVERY 1 MINUTE STARTS NOW() + INTERVAL 1 MINUTE
+            ON COMPLETION PRESERVE ENABLE
+            DO DELETE FROM users
+            WHERE is_verified = false
+            AND account_must_be_verified_before < NOW()
+        ";
 
         $this->em->getConnection()->exec($sqlQuery);
     }

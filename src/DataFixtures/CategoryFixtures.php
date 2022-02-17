@@ -2,9 +2,10 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Category;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class CategoryFixtures extends Fixture
 {
@@ -14,15 +15,17 @@ class CategoryFixtures extends Fixture
     {
         $this->manager = $manager;
 
-        $this->generateCategories(3);
+        $this->generateCategories(5);
 
         $this->manager->flush();
     }
 
     private function generateCategories(int $number): void
     {
+        $faker= Factory::create('fr_FR');
+        
         for ($i = 1; $i <= $number; $i++) {
-            $category = (new Category())->setName("Catégorie {$i}");
+            $category = (new Category())->setName($faker->word);
 
             $this->addReference("category{$i}", $category);
 

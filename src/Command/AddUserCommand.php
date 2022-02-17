@@ -76,7 +76,7 @@ class AddUserCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output): void
     {
-        $this->io->section("Ajout d'un utilisateur en base de donnée");
+        $this->io->section("Ajout d'un utilisateur en base de données");
 
         $this->enterEmail($input, $output);
         $this->enterPassword($input, $output);

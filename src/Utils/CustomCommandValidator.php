@@ -53,4 +53,17 @@ class CustomCommandValidator
 
         return $plainPassword;
     }
+
+    public function checkEmailForUserDelete(?string $emailEntered): string
+    {
+        if (empty($emailEntered)) {
+            throw new InvalidArgumentException('Veuillez saisir un e-mail');
+        }
+
+        if (!filter_var($emailEntered, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidArgumentException("L' e-mail saisi est invalide.");
+        }
+
+        return $emailEntered;
+    }
 }
