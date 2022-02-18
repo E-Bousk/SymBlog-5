@@ -1,0 +1,396 @@
+results:
+    -
+        gender: female
+        name:
+            title: Ms
+            first: Thaïs
+            last: Carpentier
+        location:
+            street: {number: 1319, name: 'Rue Dumenge'}
+            city: Saint-Pierre
+            state: Guadeloupe
+            country: France
+            postcode: 96065
+            coordinates: {latitude: '-24.9265', longitude: '118.2724'}
+            timezone: {offset: '+3:30', description: Tehran}
+        email: thais.carpentier@example.com
+        login:
+            uuid: f2b92ed5-f995-4156-a2fc-f217cd90005a
+            username: smallzebra214
+            password: zzzzzzz
+            salt: KMvfwzOl
+            md5: 6d83835720d552fa206854cb55ca9b4e
+            sha1: d0976868d61134898e908bd871024a5312d8abfd
+            sha256: e03c9f6eefbb9e5e3bf5b8867cd16164d3a5f0c20d4fa8982966eb85c3d4dbe0
+        dob:
+            date: '1948-09-19T10:02:06.042Z'
+            age: 74
+        registered:
+            date: '2010-04-28T10:37:13.949Z'
+            age: 12
+        phone: 05-50-00-36-33
+        cell: 06-05-63-54-43
+        id:
+            name: INSEE
+            value: '2NNaN17062525 94'
+        picture:
+            large: 'https://randomuser.me/api/portraits/women/75.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/women/75.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/women/75.jpg'
+        nat: FR
+    -
+        gender: female
+        name:
+            title: Mrs
+            first: Alexandra
+            last: Bertrand
+        location:
+            street: {number: 543, name: 'Boulevard de la Duchère'}
+            city: Dijon
+            state: Paris
+            country: France
+            postcode: 61208
+            coordinates: {latitude: '-34.8168', longitude: '-68.5896'}
+            timezone: {offset: '-7:00', description: 'Mountain Time (US & Canada)'}
+        email: alexandra.bertrand@example.com
+        login:
+            uuid: 19a59775-2b0a-4493-8e8c-c01a3025c946
+            username: tinycat296
+            password: park
+            salt: sAKZiCLr
+            md5: 06587b5a75d67ed2f261767ac176a9dd
+            sha1: a60abef113b0eb6f6389866c274866cd53b18052
+            sha256: 8252db221a29d1c20f580ce4dd9042cad4f573adbcf5c0a978bcc1914e28f412
+        dob:
+            date: '1980-12-05T08:30:30.142Z'
+            age: 42
+        registered:
+            date: '2017-05-17T17:51:17.014Z'
+            age: 5
+        phone: 04-20-73-69-83
+        cell: 06-57-43-02-57
+        id:
+            name: INSEE
+            value: '2NNaN39898659 11'
+        picture:
+            large: 'https://randomuser.me/api/portraits/women/45.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/women/45.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/women/45.jpg'
+        nat: FR
+    -
+        gender: male
+        name:
+            title: Mr
+            first: Gaëtan
+            last: Bernard
+        location:
+            street: {number: 4560, name: 'Rue Barrier'}
+            city: Caen
+            state: Maine-et-Loire
+            country: France
+            postcode: 70216
+            coordinates: {latitude: '14.7107', longitude: '117.2147'}
+            timezone: {offset: '-11:00', description: 'Midway Island, Samoa'}
+        email: gaetan.bernard@example.com
+        login:
+            uuid: 2794ae13-ad79-440c-9afd-68b76048c5ee
+            username: happysnake773
+            password: longdong
+            salt: XC7nX4pU
+            md5: d829232c42692183b2c99730ed8a1387
+            sha1: a825a1ba148e45e6c0fdd096e08222a9b1cc5b24
+            sha256: d659074895191db1717c50ab6124d71f3e390e99b1f62d2ed8162e096efe0244
+        dob:
+            date: '1973-08-07T15:01:33.007Z'
+            age: 49
+        registered:
+            date: '2017-01-29T21:29:38.551Z'
+            age: 5
+        phone: 01-14-60-73-11
+        cell: 06-90-02-89-82
+        id:
+            name: INSEE
+            value: '1NNaN84643560 57'
+        picture:
+            large: 'https://randomuser.me/api/portraits/men/50.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/men/50.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/men/50.jpg'
+        nat: FR
+    -
+        gender: male
+        name:
+            title: Mr
+            first: Justin
+            last: Michel
+        location:
+            street: {number: 2866, name: 'Rue du Bon-Pasteur'}
+            city: Caen
+            state: Guadeloupe
+            country: France
+            postcode: 27963
+            coordinates: {latitude: '75.2678', longitude: '118.8556'}
+            timezone: {offset: '+5:45', description: Kathmandu}
+        email: justin.michel@example.com
+        login:
+            uuid: a8e32105-0076-439a-87f3-ce3c86cb8d81
+            username: organicwolf772
+            password: lonewolf
+            salt: b1uRnP7z
+            md5: f0c2e0b1a7f885038f3ff1a9ccd3554f
+            sha1: b990a853968de1c1e592f9934cfb2b37ecf3ffb7
+            sha256: d4b0c986da4cabe50639c31362546ec04934ea045b3d67cb4d217fcc98f239d5
+        dob:
+            date: '1962-04-14T15:13:54.987Z'
+            age: 60
+        registered:
+            date: '2006-05-26T09:34:47.240Z'
+            age: 16
+        phone: 04-42-99-26-19
+        cell: 06-77-97-84-57
+        id:
+            name: INSEE
+            value: '1NNaN43643675 55'
+        picture:
+            large: 'https://randomuser.me/api/portraits/men/9.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/men/9.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/men/9.jpg'
+        nat: FR
+    -
+        gender: male
+        name:
+            title: Mr
+            first: Marin
+            last: Berger
+        location:
+            street: {number: 9511, name: 'Rue des Écoles'}
+            city: Villeurbanne
+            state: Maine-et-Loire
+            country: France
+            postcode: 30572
+            coordinates: {latitude: '-62.8042', longitude: '-9.5838'}
+            timezone: {offset: '+4:30', description: Kabul}
+        email: marin.berger@example.com
+        login:
+            uuid: 90b521e0-03df-4d4d-ba66-9b09f346bc4c
+            username: organicbear301
+            password: bong
+            salt: XF55pwvp
+            md5: 6b7bc3896962e879e94a7014758c477f
+            sha1: 13cd4840fbaf4f7e412dcb63fb5242fd200a1f90
+            sha256: fd15b1f92fd94aa003a5a4ead8a134a202faea26eefc0d5c553f56d7d5120e21
+        dob:
+            date: '1946-06-22T06:49:43.021Z'
+            age: 76
+        registered:
+            date: '2010-09-26T16:26:23.410Z'
+            age: 12
+        phone: 03-15-56-08-61
+        cell: 06-75-55-01-06
+        id:
+            name: INSEE
+            value: '1NNaN94676015 41'
+        picture:
+            large: 'https://randomuser.me/api/portraits/men/27.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/men/27.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/men/27.jpg'
+        nat: FR
+    -
+        gender: male
+        name:
+            title: Mr
+            first: Roméo
+            last: Richard
+        location:
+            street: {number: 6988, name: 'Avenue de la République'}
+            city: Rueil-Malmaison
+            state: Indre
+            country: France
+            postcode: 33410
+            coordinates: {latitude: '-52.5504', longitude: '-55.5697'}
+            timezone: {offset: '+2:00', description: 'Kaliningrad, South Africa'}
+        email: romeo.richard@example.com
+        login:
+            uuid: 30d5b3af-689f-4b53-9974-ef3a1fbcfbe7
+            username: goldenostrich755
+            password: romance
+            salt: MEz8AYVh
+            md5: 1aeacb0c2eec4b91ae0225fed563fbda
+            sha1: 79bbbf50f9f6eade545497c54dd46ef9248cd5a5
+            sha256: 22325ec0b06e17532d3ea4f5aa5d97cb55c14c76c6b04c7a59249a2e764f26b7
+        dob:
+            date: '1991-08-26T18:48:21.899Z'
+            age: 31
+        registered:
+            date: '2014-07-31T20:35:34.112Z'
+            age: 8
+        phone: 03-80-64-62-83
+        cell: 06-36-69-47-59
+        id:
+            name: INSEE
+            value: '1NNaN61197230 57'
+        picture:
+            large: 'https://randomuser.me/api/portraits/men/87.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/men/87.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/men/87.jpg'
+        nat: FR
+    -
+        gender: female
+        name:
+            title: Mrs
+            first: Candice
+            last: Moulin
+        location:
+            street: {number: 1365, name: 'Rue Bossuet'}
+            city: Caen
+            state: Ardèche
+            country: France
+            postcode: 15814
+            coordinates: {latitude: '9.3285', longitude: '104.5702'}
+            timezone: {offset: '-9:00', description: Alaska}
+        email: candice.moulin@example.com
+        login:
+            uuid: 65b759b8-8b34-490a-bbf9-3c8ee3554290
+            username: blueelephant961
+            password: '898989'
+            salt: vRZGRziK
+            md5: b00166e11762239e7d47ce3c52e9db12
+            sha1: f6aaaf1c58d84380c16da4f61aaf4d13af0b71cd
+            sha256: 416ea854daf7dc2957eb718f9a6a65c73eb286d895ed48dca0d6ce57657aa727
+        dob:
+            date: '1972-03-22T10:05:24.663Z'
+            age: 50
+        registered:
+            date: '2012-02-25T08:55:19.975Z'
+            age: 10
+        phone: 02-69-80-11-54
+        cell: 06-68-30-67-64
+        id:
+            name: INSEE
+            value: '2NNaN48806303 46'
+        picture:
+            large: 'https://randomuser.me/api/portraits/women/83.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/women/83.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/women/83.jpg'
+        nat: FR
+    -
+        gender: female
+        name:
+            title: Mrs
+            first: Noélie
+            last: Leroy
+        location:
+            street: {number: 5869, name: 'Rue Baraban'}
+            city: Toulon
+            state: Creuse
+            country: France
+            postcode: 80441
+            coordinates: {latitude: '-49.7149', longitude: '-167.8743'}
+            timezone: {offset: '-9:00', description: Alaska}
+        email: noelie.leroy@example.com
+        login:
+            uuid: 74928891-db2c-4888-820a-e6bcb11972b5
+            username: lazyfish404
+            password: marc
+            salt: mgGTrRDx
+            md5: da882e63c81f6cebd9e0ebdcfcf8ce18
+            sha1: 220f3980b4f0b7055567f7635f0359675b3b1c6b
+            sha256: 63c0c743fe0b2c33b2ccb1676b016ec4d2324ec62909c4bbd3aaf7e9a50d52ae
+        dob:
+            date: '1957-12-18T06:22:41.754Z'
+            age: 65
+        registered:
+            date: '2006-06-27T20:31:59.916Z'
+            age: 16
+        phone: 03-39-05-17-09
+        cell: 06-82-51-27-87
+        id:
+            name: INSEE
+            value: '2NNaN10139437 03'
+        picture:
+            large: 'https://randomuser.me/api/portraits/women/81.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/women/81.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/women/81.jpg'
+        nat: FR
+    -
+        gender: female
+        name:
+            title: Ms
+            first: Jeanne
+            last: Morel
+        location:
+            street: {number: 9802, name: 'Rue de L''Église'}
+            city: Avignon
+            state: Cantal
+            country: France
+            postcode: 73143
+            coordinates: {latitude: '58.4089', longitude: '127.0381'}
+            timezone: {offset: '+4:30', description: Kabul}
+        email: jeanne.morel@example.com
+        login:
+            uuid: 8b0c7497-6f6d-4c2c-8abd-be7e0a793d55
+            username: purplezebra805
+            password: marvel
+            salt: GhDGn161
+            md5: c613b1fa9b40fbd06def402f27f147b7
+            sha1: f62ffca5fe379afd27b3d6288be82f94c1399aa5
+            sha256: 5fe1fd226ca0211d8f78704f33e74a8d8724e22ac0dfeb0f796b5d747d48ff1b
+        dob:
+            date: '1952-05-31T05:01:55.028Z'
+            age: 70
+        registered:
+            date: '2013-07-23T23:07:32.900Z'
+            age: 9
+        phone: 01-34-21-49-94
+        cell: 06-09-71-49-59
+        id:
+            name: INSEE
+            value: '2NNaN17953926 21'
+        picture:
+            large: 'https://randomuser.me/api/portraits/women/16.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/women/16.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/women/16.jpg'
+        nat: FR
+    -
+        gender: female
+        name:
+            title: Miss
+            first: Gabrielle
+            last: Hubert
+        location:
+            street: {number: 6286, name: 'Rue de L''Abbé-Migne'}
+            city: Boulogne-Billancourt
+            state: Eure-et-Loir
+            country: France
+            postcode: 36179
+            coordinates: {latitude: '34.5984', longitude: '52.2568'}
+            timezone: {offset: '-1:00', description: 'Azores, Cape Verde Islands'}
+        email: gabrielle.hubert@example.com
+        login:
+            uuid: f6b9ea22-fc46-408f-bc2b-81263015bd8b
+            username: redelephant235
+            password: record
+            salt: MKynQMSn
+            md5: 1cf6195759fa8581e2d7291f8b39323d
+            sha1: 4a815a0b8dad2846d394846a39222deb217f535f
+            sha256: 9f92cde5810d0509fcba904bf34e1ef309b3b5450fbfe117fcf70bd4085bd2f9
+        dob:
+            date: '1974-01-20T02:52:17.225Z'
+            age: 48
+        registered:
+            date: '2017-12-28T15:03:22.423Z'
+            age: 5
+        phone: 04-17-08-37-03
+        cell: 06-42-18-44-29
+        id:
+            name: INSEE
+            value: '2NNaN17702424 53'
+        picture:
+            large: 'https://randomuser.me/api/portraits/women/72.jpg'
+            medium: 'https://randomuser.me/api/portraits/med/women/72.jpg'
+            thumbnail: 'https://randomuser.me/api/portraits/thumb/women/72.jpg'
+        nat: FR
+info:
+    seed: 0e0d15c505e6e07c
+    results: 10
+    page: 1
+    version: '1.3'

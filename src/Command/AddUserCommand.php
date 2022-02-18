@@ -19,7 +19,7 @@ class AddUserCommand extends Command
     use CommandTrait; 
     
     protected static $defaultName = 'app:add-user';
-    protected static string $defaultDescription = 'Créé un utilisateur en base de données.';
+    protected static string $defaultDescription = 'Crée un utilisateur en base de données.';
 
     private  SymfonyStyle $io;
 
