@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class RegistrationController extends AbstractController
@@ -21,7 +20,6 @@ class RegistrationController extends AbstractController
      */
     public function register(
         Request $request,
-        UserPasswordEncoderInterface $userPasswordEncoder, 
         EntityManagerInterface $entityManager,
         TokenGeneratorInterface $tokenGenerator,
         SendEmail $sendEmail
@@ -33,9 +31,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRegistrationToken($tokenGenerator->generateToken())
-                ->setPassword($userPasswordEncoder->encodePassword($user, $form->get('password')->getData()))
-            ;
+            $user->setRegistrationToken($tokenGenerator->generateToken());
 
             $entityManager->persist($user);
             $entityManager->flush();

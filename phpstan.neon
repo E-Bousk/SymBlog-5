@@ -1,27 +1,30 @@
 parameters:
-    level: 9
-    paths:
-        - src
-    # excludes_analyse:
-        # - src/DataFixtures
-    checkGenericClassInNonGenericObjectType: false
-    checkMissingIterableValueType: false
-    ignoreErrors:
-        - 
-          message: '#Property [a-zA-Z0-9\\_]+::\$id is never written, only read.#'
-          path: src/Entity/*
-        - 
-          message: '|Call to an undefined method object::setArticle\(\).|'
-          path: src\DataFixtures\ArticleFixtures.php
-        - 
-          message: '|Parameter #1 \$author of method App\\Entity\\Article::setAuthor\(\) expects App\\Entity\\Author, object given.|'
-          path: src\DataFixtures\ArticleFixtures.php
-        - 
-          message: '|Parameter #1 \$category of method App\\Entity\\Article::addCategory\(\) expects App\\Entity\\Category, object given.|'
-          path: src\DataFixtures\ArticleFixtures.php
-        - 
-          message: '|Parameter #1 \$picture of method App\\Entity\\Article::setPicture\(\) expects App\\Entity\\Picture, object given.|'
-          path: src\DataFixtures\ArticleFixtures.php
-        - 
-          message: '~Parameter #1 \$author of method App\\Entity\\User::setAuthor\(\) expects App\\Entity\\Author\|null, object given.~'
-          path: src\DataFixtures\UserFixtures.php
+		level: 9
+		paths:
+				- src
+		# excludes_analyse:
+				# - src/DataFixtures
+		checkGenericClassInNonGenericObjectType: false
+		checkMissingIterableValueType: false
+		ignoreErrors:
+				- 
+					message: '#Property [a-zA-Z0-9\\_]+::\$id is never written, only read.#'
+					path: src/Entity/*
+				- 
+					message: '|Call to an undefined method object::setArticle\(\).|'
+					path: src\DataFixtures\ArticleFixtures.php
+				- 
+					message: '|Parameter #1 \$author of method App\\Entity\\Article::setAuthor\(\) expects App\\Entity\\Author, object given.|'
+					path: src\DataFixtures\ArticleFixtures.php
+				- 
+					message: '|Parameter #1 \$category of method App\\Entity\\Article::addCategory\(\) expects App\\Entity\\Category, object given.|'
+					path: src\DataFixtures\ArticleFixtures.php
+				- 
+					message: '|Parameter #1 \$picture of method App\\Entity\\Article::setPicture\(\) expects App\\Entity\\Picture, object given.|'
+					path: src\DataFixtures\ArticleFixtures.php
+				- 
+					message: '~Parameter #1 \$author of method App\\Entity\\User::setAuthor\(\) expects App\\Entity\\Author\|null, object given.~'
+					path: src\DataFixtures\UserFixtures.php
+				-
+					message: '~Call to an undefined method Doctrine\\Persistence\\Event\\LifecycleEventArgs::getEntityChangeSet\(\).~'
+					path: src\EventListener\UserPasswordEncoderEntityListener.php

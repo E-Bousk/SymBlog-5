@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -182,7 +181,6 @@ class UserAccountAreaController extends AbstractController
     public function modifyPassword(
         Request $request,
         TokenStorageInterface $tokenStorage,
-        UserPasswordEncoderInterface $encoder,
         ValidatorInterface $validator
     ): JsonResponse
     {
@@ -222,7 +220,7 @@ class UserAccountAreaController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $user->setPassword($encoder->encodePassword($user, $passwordEntered));
+        $user->setPassword($passwordEntered); // Le mot de passe est chiffré avec un eventsubscriber (et services.yaml)
 
         $this->em->flush();
 

@@ -14,7 +14,7 @@ class CustomCommandValidator
      * @return string 
      * @throws InvalidArgumentException 
      */
-    public function validateEmail(?string $enteredEmail): string
+    public function validateEmailWithDns(?string $enteredEmail): string
     {
         if (empty($enteredEmail)) {
             throw new InvalidArgumentException('Veuillez saisir un e-mail.');
@@ -29,6 +29,19 @@ class CustomCommandValidator
             throw new InvalidArgumentException("L' e-mail saisi est invalide.");
         }
 
+        return $enteredEmail;
+    }
+
+    public function validateEmail(?string $enteredEmail): string
+    {
+        if (empty($enteredEmail)) {
+            throw new InvalidArgumentException('Veuillez saisir un e-mail.');
+        }
+
+        if (!filter_var($enteredEmail, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidArgumentException("L' e-mail saisi est invalide.");
+        }
+        
         return $enteredEmail;
     }
 

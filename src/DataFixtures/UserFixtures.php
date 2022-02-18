@@ -8,20 +8,12 @@ use App\Utils\DateTimeImmutableTrait;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     use DateTimeImmutableTrait;
 
     private ObjectManager $manager;
-
-    private UserPasswordEncoderInterface $encoder;
-
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
 
     public function load(ObjectManager $manager): void
     {
@@ -46,7 +38,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
         $user = new User();
         $user->setEmail('admin@symfony.com')
-            ->setPassword($this->encoder->encodePassword($user, 'root'))
+            ->setPassword('root') // Le mot de passe est chiffré avec un eventsubscriber (et services.yaml)
             ->setRoles(['ROLE_ADMIN'])
             ->setAuthor($this->getReference("author0"))
             ->setIsVerified(true)
@@ -56,7 +48,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= $number; $i++) {
             $user = new User();
             $user->setEmail($faker->freeEmail)
-                ->setPassword($this->encoder->encodePassword($user, 'password'))
+                ->setPassword('password') // Le mot de passe est chiffré avec un eventsubscriber (et services.yaml)
                 ->setIsVerified($faker->boolean(50))
                 ->setAuthor($this->getReference("author{$i}"))
             ;
@@ -74,7 +66,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
             $user = new User();
             $user->setEmail($faker->freeEmail)
-                ->setPassword($this->encoder->encodePassword($user, 'password'))
+                ->setPassword('password') // Le mot de passe est chiffré avec un eventsubscriber (et services.yaml)
                 ->setIsVerified(false)
                 ->setAccountMustBeVerifiedBefore($randomDatetimeImmutable)
             ;

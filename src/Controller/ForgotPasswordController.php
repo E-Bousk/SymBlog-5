@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class ForgotPasswordController extends AbstractController
@@ -89,7 +88,7 @@ class ForgotPasswordController extends AbstractController
     /**
      * @Route("/reset-password", name="app_reset_password", methods={"GET", "POST"})
      */
-    public function resetPassword(Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function resetPassword(Request $request): Response
     {
         [
             'token' => $token,
@@ -115,8 +114,6 @@ class ForgotPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($encoder->encodePassword($user, $form['password']->getData()));
-
             $user->setForgotPasswordToken(null)
                 ->setForgotPasswordTokenVerifiedAt(new \DateTimeImmutable())
             ;
