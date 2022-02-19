@@ -1,0 +1,124 @@
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 100vh;
+    background: linear-gradient(to right, #141e30, #245b55);
+    color: #fff;
+    font-size: 1.2rem;
+    font-family: sans-serif;
+}
+
+h1::before, h1::after {
+    content: '\01f6ab';
+}
+
+h1::before {
+    margin-right: 0.5rem;
+}
+
+h1::after {
+    margin-left: 0.5rem;
+}
+
+main p {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th, table td{
+    border: 0.1rem solid #fff;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+table th {
+    background-color: slategray;
+}
+
+table th::after {
+    content: '\01f625';
+    margin-left: 0.5rem;
+}
+
+div[class="desert"] {
+    position: relative;
+    width: 800px;
+    height: 350px;
+    margin: auto;
+    border: 0.5rem solid;
+    border-image: linear-gradient(darkgreen, tomato) 1;
+    background-image: url('../images/desert.png');
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: cover;
+}
+
+div[id="dino"], div[id="cactus"] {
+    position: absolute;
+    bottom: 0;
+    width: 60px;
+    height: 60px;
+}
+
+div[id="dino"] {
+    background-image: url('../images/dino.png');
+    left: 300px;
+}
+
+div[id="cactus"] {
+    background-image: url('../images/cactus.png');
+    left: 740px;
+    animation: cactus-move 1.5s infinite linear;
+    -webkit-animation: cactus-move 1.5s infinite linear;
+}
+
+div.dino-jump {
+    animation: jump 0.5s linear;
+    -webkit-animation: jump 0.5s linear;
+}
+
+div.injuries {
+    filter: drop-shadow(0 0 0.5rem red);
+    -webkit-filter: drop-shadow(0 0 0.5rem red);
+}
+
+@keyframes cactus-move {
+    0%
+    {
+        left: 740px;
+    }
+
+    100%
+    {
+        left: 0;
+    }
+}
+@keyframes jump {
+    0%
+    {
+        bottom: 0;
+    }
+
+    50%
+    {
+        bottom: 120px;
+    }
+
+    100%
+    {
+        bottom: 0;
+    }
+}

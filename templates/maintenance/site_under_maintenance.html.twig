@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon.ico') }}" type="image/x-icon">
+        <link rel="stylesheet" href="{{ asset('assets/css/maintenance.css') }}">
+        <script src="{{ asset('assets/js/maintenance/dino.js') }}" defer></script>
+        <title>Site en maintenance</title>
+    </head>
+    <body>
+        <header>
+            <h1>Site en maintenance</h1>
+        </header>
+        <main>
+            <p>Malheureusement, le site est actuellement en cours de maintenance.</p>
+            <p>En patientant, aidez Dino à éviter des blessures atroces !</p>
+            <div class="desert">
+                <div id="dino"></div>
+                <div id="cactus"></div>
+            </div>
+        </main>
+        <footer>
+            <table>
+                <thead>
+                    <th>Blessures Dino</th>
+                </thead>
+                <tbody>
+                    <td>0</td>
+                </tbody>
+            </table>
+        </footer>
+    </body>
+
+</html>
