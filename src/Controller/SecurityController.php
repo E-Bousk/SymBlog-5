@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\AuthLogRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -12,7 +14,11 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login", methods={"GET", "POST"})
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(
+        AuthenticationUtils $authenticationUtils,
+        AuthLogRepository $authLogRepository,
+        Request $request
+    ): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
@@ -23,7 +29,16 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $userIp = $request->getClientIp();
+
+        $recentFailedLoginCount = 0;
+
+        if ($lastUsername) {
+            $recentFailedLoginCount = $authLogRepository->getRecentAttemptFailure($lastUsername, $userIp);
+        }
+
         return $this->render('security/login.html.twig', [
+            'recent_failed_login_count' => $recentFailedLoginCount,
             'last_username' => $lastUsername,
             'error'         => $error
         ]);

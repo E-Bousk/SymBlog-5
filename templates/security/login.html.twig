@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {% if recent_failed_login_count >= 3 %}
+        <script src="https://js.hcaptcha.com/1/api.js?hl={{ app.request.locale }}" async defer></script>
+        <script src="{{ asset('assets/js/auth/hcaptcha.js') }}"></script>
+    {% endif %}
+{% endblock %}
+
+
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
@@ -41,7 +49,13 @@
                 <label class="custom-control-label" for="remember_me_checkbox">Se souvenir de moi</label>
             </fieldset>
 
-            <button class="btn btn-ml btn-primary d-block mx-auto" type="submit">Valider</button>
+            {% if recent_failed_login_count >= 3 %}
+               <button type="submit" class="h-captcha mx-auto btn btn-ml btn-primary d-block" data-sitekey="{{ hcaptcha_site_key }}" data-theme="dark" data-callback="submitFormWithHcaptchaResponse">
+                   Se connecter
+               </button>
+            {% else %}
+                <button class="btn btn-ml btn-primary d-block mx-auto" type="submit">Valider</button>
+            {% endif %}
 
         </form>
 

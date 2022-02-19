@@ -6,6 +6,7 @@
 parameters:
     app.sender_email: '%env(MAILER_SENDER_EMAIL)%'
     app.sender_name: '%env(MAILER_SENDER_NAME)%'
+    app.hcaptcha_secret_key: '%env(HCAPTCHA_SECRET_KEY)%'
 
 services:
     # default configuration for services in *this* file
@@ -58,3 +59,7 @@ services:
     App\EventSubscriber\AskForPasswordConfirmationSubscriber:
         arguments:
             $session: '@session'
+    
+    App\Service\Hcaptcha:
+        arguments:
+            $hcaptchaSecretKey: '%app.hcaptcha_secret_key%'

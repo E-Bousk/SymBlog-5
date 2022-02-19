@@ -3,6 +3,8 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Repository\AuthLogRepository;
+use App\Service\Hcaptcha;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,13 +35,17 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private CsrfTokenManagerInterface $csrfTokenManager;
     private UserPasswordEncoderInterface $passwordEncoder;
     private BruteForceChecker $bruteForceChecker;
+    private AuthLogRepository $authLogRepository;
+    private Hcaptcha $hcaptcha;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
         UserPasswordEncoderInterface $passwordEncoder,
-        BruteForceChecker $bruteForceChecker
+        BruteForceChecker $bruteForceChecker,
+        AuthLogRepository $authLogRepository,
+        Hcaptcha $hcaptcha
     )
     {
         $this->entityManager = $entityManager;
@@ -47,6 +53,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->bruteForceChecker = $bruteForceChecker;
+        $this->authLogRepository = $authLogRepository;
+        $this->hcaptcha = $hcaptcha;
     }
 
     public function supports(Request $request): bool
@@ -55,9 +63,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             && $request->isMethod('POST');
     }
 
-    /** @return array<string> */
     public function getCredentials(Request $request): array
     {
+        if (
+            $this->authLogRepository->getRecentAttemptFailure($request->request->get('email'), $request->getClientIp()) >= 3
+            && !$this->hcaptcha->isHcaptchaValid()
+        )
+        {
+            throw new CustomUserMessageAuthenticationException('La vérification anti-spam a échouée, veuillez réessayer.');
+        }
+
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
