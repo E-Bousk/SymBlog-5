@@ -36,32 +36,46 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getUserFromDiscordOauth(string $discordId, string $discordUsername, string $email): ?User
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $user = $this->findOneBy([
+            'email' => $email
+        ]);
 
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (!$user) {
+            return null;
+        }
+
+        if ($user->getDiscorId() !== $discordId) {
+            $user = $this->updateUserWithDiscordData($discordId, $discordUsername, $user);
+        }
+
+        return $user;
     }
-    */
+
+    public function updateUserWithDiscordData(string $discordId, string $discordUsername, User $user): User
+    {
+        $user->setDiscorId($discordId)
+            ->setDiscordUsername($discordUsername)
+        ;
+
+        $this->_em->flush();
+
+        return $user;
+    }
+
+    public function createUserFromDiscordOauth(string $discordId, string $discordUsername, string $email, string $randomPassword): User
+    {
+        $user = (new User())->setDiscorId($discordId)
+            ->setDiscordUsername($discordUsername)
+            ->setEmail($email)
+            ->setIsVerified(true)
+            ->setPassword($randomPassword)
+        ;
+
+        $this->_em->persist($user);
+        $this->_em->flush();
+
+        return $user;
+    }
 }

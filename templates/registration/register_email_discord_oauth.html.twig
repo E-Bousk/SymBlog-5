@@ -1,0 +1,29 @@
+<h1>Compte utilisateur créé via Discord OAuth</h1>
+
+<p>
+    Bienvenue {{ discordUsername }} !
+</p>
+<p>
+    Votre compte utilisateur a été créé avec succès ! 
+</p>
+<p>
+    Un mot de passe aléatoire (dont nous n'avons pas connaissance) vous a été attribué.
+    Nous vous conseillons de le modifier dès que possible dans votre <a href="{{ absolute_url(path('app_user_account_profile_home')) }}">espace utilisateur</a> .
+</p>
+
+<details>
+    <summary>&#x1F447; Cliquez pour afficher/cacher le mot de passe ci-dessous &#x1F447;</summary>
+    <strong>{{ randomPassword }}</strong>
+</details>
+
+<p>
+    Ce mot de passe (ou celui par lequel vous l'aurez remplacé) vous permettra de :
+</p>
+
+<ul>
+    <li>Vous authentifier par couple e-mail/mot de passe.</li>
+    <!-- <li>Activer ou non la double authentification par smartphone si vous ajouter un numéro de téléphone portable.</li> -->
+    <li>Autoriser ou non l'authentification uniquement si l'adresse IP est présente dans une liste blanche que vous pouvez éditer.</li>
+</ul>
+
+<img src="{{ email.image('@images/footer.jpg') }}" alt="footer email">

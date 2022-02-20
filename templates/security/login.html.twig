@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/login_page_discord.css') }}">
+{% endblock %}
+
 {% block javascripts %}
     {% if recent_failed_login_count >= 3 %}
         <script src="https://js.hcaptcha.com/1/api.js?hl={{ app.request.locale }}" async defer></script>
@@ -58,6 +62,8 @@
             {% endif %}
 
         </form>
+
+        <a href="{{ path('app_oauth_discord') }}" class="mt-3 oauth-button"><img class="mr-3" src="{{ asset('assets/images/discord_icon.png') }}" alt="logo discord">M'authentifier via Discord</a>
 
         <a href="{{ path('app_forgot_password') }}" class="mt-3 d-block text-center text-info text-decoration-none">Mot de passe oublié ?</a>
 

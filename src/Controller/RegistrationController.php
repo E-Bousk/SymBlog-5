@@ -31,7 +31,10 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRegistrationToken($tokenGenerator->generateToken());
+            $user->setRegistrationToken($tokenGenerator->generateToken())
+                ->setAccountMustBeVerifiedBefore((new \DateTimeImmutable())->add(new \DateInterval("P1D")))
+                ->setIsVerified(false)
+            ;
 
             $entityManager->persist($user);
             $entityManager->flush();

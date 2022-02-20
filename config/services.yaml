@@ -7,6 +7,8 @@ parameters:
     app.sender_email: '%env(MAILER_SENDER_EMAIL)%'
     app.sender_name: '%env(MAILER_SENDER_NAME)%'
     app.hcaptcha_secret_key: '%env(HCAPTCHA_SECRET_KEY)%'
+    app.discord_client_id: '%env(DISCORD_CLIENT_ID)%'
+    app.discord_client_secret: '%env(DISCORD_CLIENT_SECRET)%'
 
 services:
     # default configuration for services in *this* file
@@ -63,3 +65,10 @@ services:
     App\Service\Hcaptcha:
         arguments:
             $hcaptchaSecretKey: '%app.hcaptcha_secret_key%'
+    
+    App\Security\DiscordUserProvider:
+        arguments:
+            $discordClientId: '%app.discord_client_id%'
+            $discordClientSecret: '%app.discord_client_secret%'
+
+    

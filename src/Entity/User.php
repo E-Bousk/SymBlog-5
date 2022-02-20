@@ -56,9 +56,9 @@ class User implements UserInterface
     private \DateTimeImmutable $registeredAt;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private \DateTimeImmutable $accountMustBeVerifiedBefore;
+    private ?\DateTimeImmutable $accountMustBeVerifiedBefore;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -106,12 +106,20 @@ class User implements UserInterface
      */
     private array $whitelistedIpAddresses = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $discordId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $discordUsername;
+
     public function __construct()
     {
-        $this->isVerified = false;
         $this->roles = ['ROLE_USER'];
         $this->registeredAt = new \DateTimeImmutable();
-        $this->accountMustBeVerifiedBefore = (new \DateTimeImmutable())->add(new \DateInterval("P1D"));
         $this->isGuardCheckIp = false;
     }
 
@@ -226,12 +234,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAccountMustBeVerifiedBefore(): \DateTimeImmutable
+    public function getAccountMustBeVerifiedBefore(): ?\DateTimeImmutable
     {
         return $this->accountMustBeVerifiedBefore;
     }
 
-    public function setAccountMustBeVerifiedBefore(\DateTimeImmutable $accountMustBeVerifiedBefore): self
+    public function setAccountMustBeVerifiedBefore(?\DateTimeImmutable $accountMustBeVerifiedBefore): self
     {
         $this->accountMustBeVerifiedBefore = $accountMustBeVerifiedBefore;
 
@@ -344,6 +352,30 @@ class User implements UserInterface
     public function setWhitelistedIpAddresses(array $whitelistedIpAddresses): self
     {
         $this->whitelistedIpAddresses = $whitelistedIpAddresses;
+
+        return $this;
+    }
+
+    public function getDiscorId(): ?string
+    {
+        return $this->discordId;
+    }
+
+    public function setDiscorId(?string $discordId): self
+    {
+        $this->discordId = $discordId;
+
+        return $this;
+    }
+
+    public function getDiscordUsername(): ?string
+    {
+        return $this->discordUsername;
+    }
+
+    public function setDiscordUsername(?string $discordUsername): self
+    {
+        $this->discordUsername = $discordUsername;
 
         return $this;
     }
