@@ -33,12 +33,12 @@
         "version": "v0.5.3"
     },
     "doctrine/doctrine-bundle": {
-        "version": "2.3",
+        "version": "2.5",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "2.3",
-            "ref": "4f5eb542f01475cc2eb49624e2f1a3ea458e73bf"
+            "ref": "52eabf77a390fe5a12a589d74d8f2a31f60ad013"
         },
         "files": [
             "./config/packages/doctrine.yaml",
@@ -221,12 +221,12 @@
         "version": "v5.1.11"
     },
     "symfony/framework-bundle": {
-        "version": "5.1",
+        "version": "5.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
-            "version": "5.1",
-            "ref": "0cc6d287da757e1167e287d84487662825119e91"
+            "version": "5.2",
+            "ref": "ffefb327a5300bbf5ff7ed586afe17d9b507c7c5"
         },
         "files": [
             "./config/packages/cache.yaml",
@@ -287,8 +287,8 @@
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
-            "version": "3.7",
-            "ref": "a7bace7dbc5a7ed5608dbe2165e0774c87175fe6"
+            "version": "3.3",
+            "ref": "2120e71a370db3a494b8afcc42d7cfb2cff6f910"
         },
         "files": [
             "./config/packages/dev/monolog.yaml",
@@ -319,6 +319,9 @@
         "version": "v1.24.0"
     },
     "symfony/polyfill-php80": {
+        "version": "v1.24.0"
+    },
+    "symfony/polyfill-php81": {
         "version": "v1.24.0"
     },
     "symfony/property-access": {
