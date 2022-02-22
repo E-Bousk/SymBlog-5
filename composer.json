@@ -32,9 +32,13 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "fakerphp/faker": "^1.18",
         "phpstan/phpstan": "^1.4",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "5.2.*",
+        "symfony/css-selector": "5.2.*",
         "symfony/debug-bundle": "5.2.*",
         "symfony/maker-bundle": "^1.36",
         "symfony/monolog-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^6.0",
         "symfony/stopwatch": "5.2.*",
         "symfony/web-profiler-bundle": "5.2.*"
     },
