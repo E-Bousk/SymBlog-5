@@ -16,7 +16,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/register", name="app_register", methods={"GET", "POST"})
+     * @Route("/register", name="app_register", methods={"GET", "POST"}, defaults={"_public_access": true})
      */
     public function register(
         Request $request,
@@ -64,6 +64,10 @@ class RegistrationController extends AbstractController
      */
     public function verifyUserAccount(EntityManagerInterface $entityManager, User $user, string $token): Response
     {
+        if ($user->getAccountMustBeVerifiedBefore() === null) {
+            return $this->redirectToRoute('app_login');
+        }
+        
         if (($user->getRegistrationToken() === null) || ($user->getRegistrationToken() !== $token) || ($this->isNotRequestedInTime($user->getAccountMustBeVerifiedBefore()))) {
             throw new AccessDeniedException("Ce token n'est pas/plus valide");
         }

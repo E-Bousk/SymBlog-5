@@ -30,7 +30,7 @@ class ForgotPasswordController extends AbstractController
     }
 
     /**
-     * @Route("/forgot-password", name="app_forgot_password", methods={"GET", "POST"})
+     * @Route("/forgot-password", name="app_forgot_password", methods={"GET", "POST"}, defaults={"_public_access": true})
      */
     public function sendRecoveryLink(Request $request, SendEmail $sendEmail, TokenGeneratorInterface $tokenGenerator): Response
     {

@@ -2,10 +2,11 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\User;
 use App\Service\SendEmail;
 use Psr\Log\LoggerInterface;
-use App\Event\UserCreatedFromDiscordOauthEvent;
 use App\Repository\UserRepository;
+use App\Event\UserCreatedFromDiscordOauthEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UserCreatedFromDiscordOauthSubscriber implements EventSubscriberInterface
@@ -33,6 +34,7 @@ class UserCreatedFromDiscordOauthSubscriber implements EventSubscriberInterface
         $email = $event->getEmail();
         $randomPassord = $event->getRandomPassword();
         
+        /** @var User $user */
         $user = $this->userRepository->findOneBy([
             'email' => $email
         ]);

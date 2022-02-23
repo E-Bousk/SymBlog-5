@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="app_home", methods={"GET"})
+     * @Route("/", name="app_home", methods={"GET"}, defaults={"_public_access": true})
      */
     public function index(): Response
     {
