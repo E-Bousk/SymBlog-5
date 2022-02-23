@@ -10,27 +10,11 @@ final class PublicUrlSmokeTest extends WebTestCase
 {
     use TestTrait;
 
-    public function getPublicUri(KernelBrowser $client): array
-    {
-        $router = $client->getContainer()->get('router');
-
-        $routesWithAllParameters = $router->getRouteCollection()->all();
-
-        $publicUri = [];
-
-        foreach ($routesWithAllParameters as $routeName => $routeWithAllParameters) {
-            if ($routeWithAllParameters->getDefault('_public_access') === true) {
-                $publicUri[] = $routeWithAllParameters->getPath();
-            }
-        }
-        return $publicUri;
-    }
-
     public function testAllPagesAreSuccessfulyLoaded(): void
     {
         $client = $this->createClientAndFollowRedirects();
 
-        $publicUri = $this->getPublicUri($client);
+        $publicUri = $this->getUriList($client, true);
 
         // $publicUri[] = "/false_URI/to_test"; // used to test
 

@@ -111,7 +111,7 @@ trait CommandTrait
 
         $roleQuestion = new ChoiceQuestion(
             "Sélection du rôle de l'utilisateur : ",
-            ['ROLE_USER', 'ROLE_ADMIN'],
+            ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_UNKNOWN'], // « ROLE_UNKNOWN » = pour les tests fonctionnels
             'ROLE_USER'
         );
 

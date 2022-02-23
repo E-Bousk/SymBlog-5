@@ -7,6 +7,8 @@
          colors="true"
          bootstrap="tests/bootstrap.php"
          convertDeprecationsToExceptions="false"
+         stopOnError="true"
+         stopOnFailure="true"
 >
     <php>
         <ini name="display_errors" value="1" />
@@ -19,8 +21,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="All tests">
+            <file>tests/PublicUrlSmokeTest.php</file>
+            <file>tests/ProtectedUrlSmokeTest.php</file>
+            <file>tests/Entity/UserEntityTest.php</file>
+            <file>tests/Controller/RegistrationControllerTest.php</file>
         </testsuite>
     </testsuites>
 

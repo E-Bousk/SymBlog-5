@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * @Route("/user/account/profile", name="app_user_account_profile_")
+ * @Route("/user/account/profile", name="app_user_account_profile_", defaults={"_public_access": false, "_role_required": "ROLE_USER"})
  * @IsGranted("ROLE_USER")
  */
 class UserAccountAreaController extends AbstractController
@@ -62,7 +62,7 @@ class UserAccountAreaController extends AbstractController
     }
 
     /**
-     * @Route("/add-current-ip", name="add_current_ip", methods={"GET", "POST"})
+     * @Route("/add-current-ip", name="add_current_ip", methods={"POST"})
      */
     public function addCurrentUserIpToWhitelist(Request $request): JsonResponse
     {
@@ -87,7 +87,7 @@ class UserAccountAreaController extends AbstractController
     }
 
     /**
-     * @Route("/toggle-checking-ip", name="toggle_checking_ip", methods={"GET", "POST"})
+     * @Route("/toggle-checking-ip", name="toggle_checking_ip", methods={"POST"})
      */
     public function toogleGuardCheckingIp(Request $request): JsonResponse
     {
@@ -176,7 +176,7 @@ class UserAccountAreaController extends AbstractController
     }
 
     /**
-     * @Route("/modify-password", name="modify_password", methods={"GET", "POST"})
+     * @Route("/modify-password", name="modify_password", methods={"POST"})
      */
     public function modifyPassword(
         Request $request,
