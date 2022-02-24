@@ -26,6 +26,7 @@
             <file>tests/ProtectedUrlSmokeTest.php</file>
             <file>tests/Entity/UserEntityTest.php</file>
             <file>tests/Controller/RegistrationControllerTest.php</file>
+            <file>tests/Controller/SecurityControllerEndToEndTest.php</file>
         </testsuite>
     </testsuites>
 
@@ -40,9 +41,7 @@
     </listeners>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
-    <!--
     <extensions>
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
-    -->
 </phpunit>

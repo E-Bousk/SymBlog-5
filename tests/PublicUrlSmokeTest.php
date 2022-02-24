@@ -3,7 +3,6 @@
 namespace App\Tests;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class PublicUrlSmokeTest extends WebTestCase

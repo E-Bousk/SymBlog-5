@@ -3,10 +3,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
-use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\ExpectationFailedException;
-use OutOfBoundsException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
