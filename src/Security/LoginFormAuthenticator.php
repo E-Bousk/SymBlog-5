@@ -65,9 +65,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getCredentials(Request $request): array
     {
+        // NOTE : voir « SecurityControllerFunctionalTest.php »
+        $isHcaptchaVerificationEnabledInTestMode = $_ENV['APP_HCAPTCHA_VERIFICATION'] ?? null;
+
         if (
-            $this->authLogRepository->getRecentAttemptFailure($request->request->get('email'), $request->getClientIp()) >= 3
-            && !$this->hcaptcha->isHcaptchaValid()
+            $isHcaptchaVerificationEnabledInTestMode !== false
+            && (
+                $this->authLogRepository->getRecentAttemptFailure($request->request->get('email'), $request->getClientIp()) >= 3
+                && $this->hcaptcha->isHcaptchaValid() === false
+            )
         )
         {
             throw new CustomUserMessageAuthenticationException('La vérification anti-spam a échouée, veuillez réessayer.');

@@ -27,6 +27,7 @@
             <file>tests/Entity/UserEntityTest.php</file>
             <file>tests/Controller/RegistrationControllerTest.php</file>
             <file>tests/Controller/SecurityControllerEndToEndTest.php</file>
+            <file>tests/Controller/SecurityControllerFunctionalTest.php</file>
         </testsuite>
     </testsuites>
 

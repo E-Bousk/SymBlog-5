@@ -77,7 +77,7 @@ class SecurityControllerEndToEndTest extends PantherTestCase
         yield [
             1,
             [
-                'email'    => 'mail_to_test@test.com',
+                'email'    => 'testing_mail@test.com',
                 'password' => 'test-password-01'
             ],
             'Identifiants invalides.',
@@ -87,7 +87,7 @@ class SecurityControllerEndToEndTest extends PantherTestCase
         yield [
             2,
             [
-                'email'    => 'mail_to_test@test.com',
+                'email'    => 'testing_mail@test.com',
                 'password' => 'Test-password-02'
             ],
             'Identifiants invalides.',
@@ -97,7 +97,7 @@ class SecurityControllerEndToEndTest extends PantherTestCase
         yield [
             3,
             [
-                'email'    => 'mail_to_test@test.com',
+                'email'    => 'testing_mail@test.com',
                 'password' => 'Test-password-03'
             ],
             'Identifiants invalides.',
@@ -107,7 +107,7 @@ class SecurityControllerEndToEndTest extends PantherTestCase
         yield [
             4,
             [
-                'email'    => 'mail_to_test@test.com',
+                'email'    => 'testing_mail@test.com',
                 'password' => 'Test-password-04'
             ],
             'Identifiants invalides.',
