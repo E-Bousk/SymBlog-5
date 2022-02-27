@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Tests;
 
 use App\Service\PasswordGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +13,7 @@ class TestPasswordGenerator extends AbstractController
      */
     public function index(PasswordGenerator $passwordGenerator): void
     {
-        $newPasswordGenerated = $passwordGenerator->generateRandomStrongPassword(10);
+        $newPasswordGenerated = $passwordGenerator->generateRandomStrongPassword(15);
         if (str_starts_with($newPasswordGenerated, 'La')) {
             dd($newPasswordGenerated);
         }
