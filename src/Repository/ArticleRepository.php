@@ -23,12 +23,20 @@ class ArticleRepository extends ServiceEntityRepository
 
     public function getCountOfArticlesCreated(User $user): int
     {
-        return $this->createQueryBuilder('ac')
+        // return $this->createQueryBuilder('ac')
+        //     ->select('COUNT(ac)')
+        //     ->innerJoin('App\Entity\Author', 'a', Join::WITH, 'a.id = ac.author')
+        //     ->innerJoin('App\Entity\User', 'u', Join::WITH, 'a.id = u.author')
+        //     ->where('u.id = :user')
+        //     ->setParameter('user', $user)
+        //     ->getQuery()
+        //     ->getSingleScalarResult()
+        // ;
+        return $this
+            ->createQueryBuilder('ac')
             ->select('COUNT(ac)')
-            ->innerJoin('App\Entity\Author', 'a', Join::WITH, 'a.id = ac.author')
-            ->innerJoin('App\Entity\User', 'u', Join::WITH, 'a.id = u.author')
-            ->where('u.id = :user')
-            ->setParameter('user', $user)
+            ->where('ac.author = :author')
+            ->setParameter('author', $user->getAuthor())
             ->getQuery()
             ->getSingleScalarResult()
         ;
@@ -36,13 +44,22 @@ class ArticleRepository extends ServiceEntityRepository
 
     public function getCountOfArticlesPublished(User $user): int
     {
-        return $this->createQueryBuilder('ap')
+        // return $this->createQueryBuilder('ap')
+        //     ->select('COUNT(ap)')
+        //     ->innerJoin('App\Entity\Author', 'a', Join::WITH, 'a.id = ap.author')
+        //     ->innerJoin('App\Entity\User', 'u', Join::WITH, 'a.id = u.author')
+        //     ->where('u.id = :user')
+        //     ->andWhere('ap.isPublished = true')
+        //     ->setParameter('user', $user)
+        //     ->getQuery()
+        //     ->getSingleScalarResult()
+        // ;
+        return $this
+            ->createQueryBuilder('ap')
             ->select('COUNT(ap)')
-            ->innerJoin('App\Entity\Author', 'a', Join::WITH, 'a.id = ap.author')
-            ->innerJoin('App\Entity\User', 'u', Join::WITH, 'a.id = u.author')
-            ->where('u.id = :user')
+            ->where('ap.author = :author')
             ->andWhere('ap.isPublished = true')
-            ->setParameter('user', $user)
+            ->setParameter('author', $user->getAuthor())
             ->getQuery()
             ->getSingleScalarResult()
         ;
