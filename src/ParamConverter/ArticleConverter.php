@@ -27,6 +27,10 @@ class ArticleConverter implements ParamConverterInterface
     public function apply(Request $request, ParamConverter $configuration): bool
     {
         $dateTimeString = $request->get('datetime');
+        
+        if ($dateTimeString === null) {
+            return false;
+        }
 
         if (($dateTimeImmutableObject = \DateTimeImmutable::createFromFormat('d-m-Y', $dateTimeString)) === false) {
             throw new NotFoundHttpException('404 error not found 😟');

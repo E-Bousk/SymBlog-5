@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/exceptions.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <h1>Ressource inexisante (404)</h1>
+
+    <figure>
+        <img src="{{ asset('assets/images/error404.jpg') }}" alt="erreur 404">
+    </figure>
+
+    <p>Le serveur n'a pas pu trouver la ressource demandée ... &#129325;</p>
+
+    
+    <p>En revanche, cette ressource existe &#128073; <a href="{{ path('app_home') }}">Découvrir</a></p>
+        
+
+{% endblock %}

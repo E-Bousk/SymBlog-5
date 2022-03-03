@@ -41,6 +41,14 @@ class ArticleEntityListener
         ;
     }
 
+    public function preUpdate(Article $article, LifecycleEventArgs $args):void
+    {
+        $article
+            ->setEditedAt(new \DateTimeImmutable())
+            ->setSlug($this->getArticleSlug($article))
+        ;
+    }
+
     public function getArticleSlug(Article $article): string
     {
         $slug = mb_strtolower(sprintf('%s-%s', $article->getTitle(), time()), 'UTF-8');

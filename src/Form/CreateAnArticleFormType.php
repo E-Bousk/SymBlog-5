@@ -39,7 +39,7 @@ class CreateAnArticleFormType extends AbstractType
             ])
             ->add('picture', FileType::class, [
                 'label'        => 'Image de l\'article',
-                'required'     => true,
+                'required'     => $options['is_edition'] ? false : true,
                 'mapped'       => false,
                 'constraints'  => [
                     new Image([
@@ -62,7 +62,8 @@ class CreateAnArticleFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Article::class,
-            'user_roles' => []
+            'user_roles' => [],
+            'is_edition' => false
         ]);
     }
 }

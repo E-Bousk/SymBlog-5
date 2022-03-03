@@ -48,6 +48,7 @@ services:
     App\EventListener\ArticleEntityListener:
         tags:
             - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Article' }
+            - { name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\Article' }
 
     Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider: ~
 

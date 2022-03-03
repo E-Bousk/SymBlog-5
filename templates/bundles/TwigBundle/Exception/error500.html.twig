@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/exceptions.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <h1>Erreur interne du serveur (500)</h1>
+
+    <figure>
+        <img src="{{ asset('assets/images/error500.jpg') }}" alt="erreur 500">
+    </figure>
+
+    <p>Le serveur ne peut traiter la requête ... &#128532;</p>
+
+    <p>Vous devez 500&euro; de préjudice !</p>
+
+    <p>Merci de procéder au virement en vous rendant sur le lien suivant &#128073; <a href="{{ path('app_home') }}">Payer ma dette</a></p>
+        
+
+{% endblock %}

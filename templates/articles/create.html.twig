@@ -1,10 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Création d'un article{% endblock %}
+{% block title %}Création/Édition d'un article{% endblock %}
 
 {% block body %}
     <header>
-        <h1 class="text-center">Création d'un article</h1>
+        <h1 class="text-center">
+            {% if isEdition is not defined %}
+                Création d'un article
+            {% else %}
+                Édition d'un article
+            {% endif %}
+        </h1>
     </header>
     <main class="container">
         {{ form(form) }}
