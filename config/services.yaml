@@ -21,6 +21,7 @@ services:
             string $uploadsDirectory: '%kernel.project_dir%/public/uploads/'
             string $dataDirectory: '%kernel.project_dir%/public/data/'
             string $maintenanceON: '%kernel.project_dir%/public/.maintenance-ON'
+            string $projectDirectory:  '%kernel.project_dir%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
