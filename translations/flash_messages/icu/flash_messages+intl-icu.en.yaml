@@ -1,0 +1,3 @@
+articles:
+  read:
+    info: 'Hello {user}, you are currently reading the best article on this site written by an user!'

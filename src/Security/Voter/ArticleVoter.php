@@ -4,6 +4,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Article;
 use App\Entity\User;
+use PhpParser\Node\Stmt\Const_;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -13,6 +14,7 @@ class ArticleVoter extends Voter
     public const CREATE = 'create';
     public const EDIT = 'edit';
     public const CAN_CREATE_ROLE = 'ROLE_WRITER';
+    public const READ = 'read';
 
     private RoleHierarchyInterface $roleHierarchy; // Note : pour changer de « security isGranted() »
 
@@ -23,7 +25,16 @@ class ArticleVoter extends Voter
 
     protected function supports(string $attribute, $subject): bool
     {
-        if (in_array($attribute, [self::CREATE, self::EDIT]) === false) {
+        if (
+            in_array(
+                $attribute,
+                [
+                    self::CREATE,
+                    self::EDIT,
+                    self::READ
+                ]
+            ) === false
+        ) {
             return false;
         }
 
@@ -51,6 +62,10 @@ class ArticleVoter extends Voter
             return $this->canEdit($subject, $user);
         }
         
+        if ($attribute === self::READ) {
+            return $this->canRead();
+        }
+
         throw new \LogicException('The second argument passed to « denyAccessUnlessGranted() » method must be an instance of « Article ».');
     }
 
@@ -62,5 +77,10 @@ class ArticleVoter extends Voter
     private function canEdit(Article $article, User $user): bool
     {
         return $article->getAuthor() === $user->getAuthor();
+    }
+
+    private function canRead(): bool
+    {
+        return true;
     }
 }

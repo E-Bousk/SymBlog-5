@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'articles_content' %}
+
+{% block title %}
+    {{ 'articles.read.title'|trans }}
+{% endblock %}
+
+{% block body %}
+    {{ include('_partials/_flashbag.html.twig') }}
+
+    <article class="my-3 container text-center">
+        <header>
+            <h1>
+                {{ article.title }}
+            </h1>
+        </header>
+        <section>
+            <p>
+                {{ article.content }}
+            </p>
+
+            {# Exemple d'une fonction Twig custom (à la place d'un simple 'include') #}
+            {{ readinThisLanguageButton(app.request.locale) }}
+
+            {# Exemple avec 'filter' « trans » : #}
+            {# NOTE: le texte est échappé. (Utliser « |raw » pour ne pas avoir d'échappement) #}
+            <p class="my-3 bg-warning">
+                {{ 'articles.read.html_text1'|trans({user: app.user}) }}
+            </p>
+
+            {# Exemple avec 'tag' « trans » #}
+            {# NOTE: le texte n'est pas échappé #}
+            <p class="my-3 bg-secondary text-white">
+                {% trans with { user: app.user } %}articles.read.html_text2{% endtrans %}
+            </p>
+
+            <p class="text-danger">
+                {{ 'articles.read.end_text'|trans }}
+            </p>
+        </section>
+    </article>
+{% endblock %}

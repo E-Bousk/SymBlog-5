@@ -1,0 +1,6 @@
+articles:
+  read:
+    end_text: 'Texte final !'
+    english_language: 'Lire en anglais'
+    french_language: 'Lire en français'
+    title: 'Lire un article'

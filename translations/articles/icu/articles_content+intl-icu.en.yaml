@@ -1,0 +1,4 @@
+articles:
+  read:
+    html_text1: "Example with 'trans' FILTER (without 'raw' filter) : <span class=\"text-warning\">{user}</span>"
+    html_text2: "Example with 'trans' TAG : <span class=\"text-warning\">{user}</span>"

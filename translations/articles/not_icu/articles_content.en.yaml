@@ -1,0 +1,6 @@
+articles:
+  read:
+    end_text: 'Final text!'
+    english_language: 'Read in english'
+    french_language: 'Read in french'
+    title: 'Read an article'

@@ -14,10 +14,48 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ArticlesController extends AbstractController
 {
+    /**
+     * @Route(
+     *      {"en": "/articles/read/{slug}", "fr": "/articles/lire/{slug}"},
+     *      name="app_article_read",
+     *      methods={"GET"},
+     *      defaults={"_public_access": false}
+     * )
+     * 
+     * @param Article $article 
+     * @param TranslatorInterface $translator 
+     * @return Response 
+     */
+    public function readArticle(Article $article, TranslatorInterface $translator): Response
+    {
+        $this->denyAccessUnlessGranted(ArticleVoter::READ);
+
+        $user = $this->getUser();
+
+        $flashMessage1 = $translator->trans(
+            'articles.read.info',
+            compact('user'),
+            'flash_messages'
+        );
+
+        $flashMessage2 = $translator->trans(
+            'articles.read.success',
+            [],
+            'flash_messages'
+        );
+
+        $this->addFlash('info', $flashMessage1);
+        $this->addFlash('success', $flashMessage2);
+
+        return $this->render('articles/read.html.twig', compact('article'));
+    }
+
     /**
      * @Route("/articles/create", name="app_articles_create", methods={"GET", "POST"}, defaults={"_public_access": false})
      * 
