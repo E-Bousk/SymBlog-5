@@ -59,9 +59,15 @@ class AuthLog
      */
     private ?\DateTimeImmutable $deauthenticatedAt;
 
-    public function __construct(string $emailEntered, ?string $userIp)
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $sessionId;
+
+    public function __construct(string $emailEntered, string $sessionId, ?string $userIp)
     {
         $this->emailEntered = $emailEntered;
+        $this->sessionId = $sessionId;
         $this->userIp = $userIp;
         $this->authAttemptAt = new \DateTimeImmutable();
         $this->isRememberMeAuth = false;
@@ -164,6 +170,18 @@ class AuthLog
     public function setDeauthenticatedAt(?\DateTimeImmutable $deauthenticatedAt): self
     {
         $this->deauthenticatedAt = $deauthenticatedAt;
+
+        return $this;
+    }
+
+    public function getSessionId(): ?string
+    {
+        return $this->sessionId;
+    }
+
+    public function setSessionId(string $sessionId): self
+    {
+        $this->sessionId = $sessionId;
 
         return $this;
     }

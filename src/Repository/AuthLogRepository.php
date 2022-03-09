@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\AuthLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\MakerBundle\Str;
 
 /**
  * @method AuthLog|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,13 +27,19 @@ class AuthLogRepository extends ServiceEntityRepository
      * Add failed authentication attempt.
      * 
      * @param string $emailEntered 
+     * @param string $sessionId 
      * @param null|string $userIp 
      * @param bool $isBlacklisted Set to true if e-mail/user IP pair must be blacklisted.
      * @return void 
      */
-    public function addFailedAuthAttempt(string $emailEntered, ?string $userIp, bool $isBlacklisted = false): void
+    public function addFailedAuthAttempt(
+        string $emailEntered,
+        string $sessionId,
+        ?string $userIp,
+        bool $isBlacklisted = false
+    ): void
     {
-        $authAttempt = (new AuthLog($emailEntered, $userIp))->setIsSuccessfulAuth(false);
+        $authAttempt = (new AuthLog($emailEntered, $sessionId, $userIp))->setIsSuccessfulAuth(false);
 
         if ($isBlacklisted) {
             $authAttempt->setStartOfBlacklisting(new \DateTimeImmutable())
@@ -49,13 +56,19 @@ class AuthLogRepository extends ServiceEntityRepository
      * Reset count of bad authentication attempt.
      * 
      * @param string $emailEntered 
+     * @param string $sessionId 
      * @param null|string $userIp 
      * @param bool $isRememberMeAuth Set to true if user is authenticated with 'remember me'.
      * @return void 
      */
-    public function addSuccessfulAuthAttempt(string $emailEntered, ?string $userIp, bool $isRememberMeAuth = false): void
+    public function addSuccessfulAuthAttempt(
+        string $emailEntered,
+        string $sessionId,
+        ?string $userIp,
+        bool $isRememberMeAuth = false
+    ): void
     {
-        $authAttempt = new AuthLog($emailEntered, $userIp);
+        $authAttempt = new AuthLog($emailEntered, $sessionId, $userIp);
 
         $authAttempt->setIsSuccessfulAuth(true)
             ->setIsRememberMeAuth($isRememberMeAuth)
@@ -171,5 +184,26 @@ class AuthLogRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute()
         ;
+    }
+
+    public function updateAuthlog(String $email): void
+    {
+        $lastAuthentication = $this->findOneBy(
+            [
+                'emailEntered'     => $email,
+                'isSuccessfulAuth' => true
+            ],
+            [
+                'id' => 'DESC'
+            ]
+        );
+
+        if ($lastAuthentication === null) {
+            return;
+        }
+
+        $lastAuthentication->setDeauthenticatedAt(new \DateTimeImmutable());
+
+        $this->_em->flush();
     }
 }

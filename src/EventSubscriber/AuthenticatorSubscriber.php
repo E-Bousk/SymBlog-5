@@ -43,8 +43,7 @@ class AuthenticatorSubscriber implements EventSubscriberInterface
         $this->bruteForceChecker = $bruteForceChecker;
     }
 
-    /** @return array<string> */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             AuthenticationEvents::AUTHENTICATION_FAILURE        => 'onSecurityAuthenticationFailure',
@@ -53,7 +52,6 @@ class AuthenticatorSubscriber implements EventSubscriberInterface
             SecurityEvents::SWITCH_USER                         => 'onSecuritySwitchUser',
             'Symfony\Component\Security\Http\Event\LogoutEvent' => 'onSecurityLogout',
             'security.logout_on_change'                         => 'onSecurityLogoutOnChange'
-
         ];
     }
     
@@ -68,7 +66,15 @@ class AuthenticatorSubscriber implements EventSubscriberInterface
 
         $this->securityLogger->info("Un utilisateur avec l'adresse IP '{$userIp}' a tenté de s'authentifier sans succès avec l'e-mail suivant : '{$emailEntered}'.");
 
-        $this->bruteForceChecker->addFailedAuthAttempt($emailEntered, $userIp);
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($request === null) {
+            throw new \LogicException('Request cannot be null here...');
+        }
+        
+        $sessionId = $request->getSession()->getId();
+
+        $this->bruteForceChecker->addFailedAuthAttempt($emailEntered, $sessionId, $userIp);
     }
 
     public function onSecurityAuthenticationSuccess(AuthenticationSuccessEvent $event): void
@@ -99,14 +105,25 @@ class AuthenticatorSubscriber implements EventSubscriberInterface
 
         $userEmail = $this->getUserEmail($securityToken);
 
-         $request = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
+
+        $sessionId = $request->getSession()->getId();
 
         if ($request && $request->cookies->get('REMEMBERME')) {
             $this->securityLogger->info("« REMEMBERME » cookie : Un utilisateur anonyme avec l'adresse IP '{$userIp}' vient de se connecter en tant qu'utilisateur. Son e-mail est : '{$userEmail}'.");
-            $this->authLogRepository->addSuccessfulAuthAttempt($userEmail, $userIp, true);
+            $this->authLogRepository->addSuccessfulAuthAttempt(
+                $userEmail,
+                $sessionId,
+                $userIp,
+                true
+            );
         } else {
             $this->securityLogger->info("Un utilisateur anonyme avec l'adresse IP '{$userIp}' vient de se connecter en tant qu'utilisateur. Son e-mail est : '{$userEmail}'.");
-            $this->authLogRepository->addSuccessfulAuthAttempt($userEmail, $userIp);
+            $this->authLogRepository->addSuccessfulAuthAttempt(
+                $userEmail,
+                $sessionId,
+                $userIp
+            );
         }
     }
 
@@ -129,6 +146,8 @@ class AuthenticatorSubscriber implements EventSubscriberInterface
         $targetUrl = $response->getTargetUrl();
 
         $this->securityLogger->info("L'utilisateur avec l'adresse IP '{$userIp}' et l'e-mail '{$userEmail}' s'est déconnecté et a été redirigé vers l'url suivante : '{$targetUrl}'.");
+
+        $this->authLogRepository->updateAuthlog($userEmail);
     }
 
     public function onSecurityLogoutOnChange(DeauthenticatedEvent $event): void

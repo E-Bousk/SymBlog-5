@@ -23,12 +23,12 @@ class BruteForceChecker
      * @param null|string $userIp 
      * @return void 
      */
-    public function addFailedAuthAttempt(string $emailEntered, ?string $userIp): void
+    public function addFailedAuthAttempt(string $emailEntered, string $sessionId, ?string $userIp): void
     {
         if ($this->authLogRepository->isBlacklistedWithNextAttemptFailure($emailEntered, $userIp)) {
-            $this->authLogRepository->addFailedAuthAttempt($emailEntered, $userIp, true);
+            $this->authLogRepository->addFailedAuthAttempt($emailEntered, $sessionId, $userIp, true);
         } else {
-            $this->authLogRepository->addFailedAuthAttempt($emailEntered, $userIp);
+            $this->authLogRepository->addFailedAuthAttempt($emailEntered, $sessionId, $userIp);
         }
     }
 
