@@ -1,0 +1,3 @@
+svg > g > path:first-of-type {
+    fill: #0000ff;
+}
